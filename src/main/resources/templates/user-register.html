@@ -21,10 +21,16 @@
                         <td><input type="text" th:field="*{username}" class="form-control" required></td>
                         <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td>
                     </tr>
+                    <p th:text="|${PasswordDoNotMatch}|"></p>
                     <tr>
                         <td>Парола</td>
-                        <td><input type="text" th:field="*{password}" class="form-control" required></td>
+                        <td><input type="password" th:field="*{password}" class="form-control" required></td>
                         <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
+                    </tr>
+                    <tr>
+                        <td>Повтори Парола</td>
+                        <td><input type="password" th:field="*{repeatPassword}" class="form-control" required></td>
+                        <td th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}"></td>
                     </tr>
                     <tr>
                         <td>Е-майл</td>
