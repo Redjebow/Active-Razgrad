@@ -1,5 +1,6 @@
-package com.example.Active.Razgrad;
+package com.example.Active.Razgrad.Config;
 
+import com.example.Active.Razgrad.user.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,7 +37,11 @@ public class WebSecurityConfig {
                         .usernameParameter("userNameOrEmail")
                         .permitAll()
                 )
-                .logout((logout) -> logout.permitAll());
+                .logout((logout) -> logout
+                        .permitAll()
+                        .logoutSuccessUrl("/"))
+                .exceptionHandling().accessDeniedPage("/access-denied");
+
 
         return http.build();
     }

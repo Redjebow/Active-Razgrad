@@ -1,10 +1,12 @@
 package com.example.Active.Razgrad.activity;
 
 import com.example.Active.Razgrad.category.Category;
+import com.example.Active.Razgrad.comments.Comment;
 import com.example.Active.Razgrad.community.Community;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Activity {
@@ -14,13 +16,24 @@ public class Activity {
     private Long id;
     private String name;
     private Date data;
-    private String adress;
+    private String address;
     private int duration;
     private int price;
     @ManyToOne
     private Community community;
     @ManyToOne
     private Category category;
+
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Comment> commentsList;
+
+    public List<Comment> getCommentsList() {
+        return commentsList;
+    }
+
+    public void setCommentsList(List<Comment> commentsList) {
+        this.commentsList = commentsList;
+    }
 
     public Long getId() {
         return id;
@@ -46,12 +59,12 @@ public class Activity {
         this.data = data;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getDuration() {

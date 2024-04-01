@@ -1,4 +1,4 @@
-package com.example.Active.Razgrad;
+package com.example.Active.Razgrad.Config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;

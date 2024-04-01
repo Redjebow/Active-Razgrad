@@ -1,4 +1,4 @@
-package com.example.Active.Razgrad;
+package com.example.Active.Razgrad.user;
 
 import com.example.Active.Razgrad.user.MyUserDetails;
 import com.example.Active.Razgrad.user.User;
