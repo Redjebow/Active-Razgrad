@@ -2,6 +2,7 @@ package com.example.Active.Razgrad.community;
 
 import com.example.Active.Razgrad.category.Category;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
 
@@ -12,18 +13,20 @@ public class Community {
     @Column(name = "id", nullable = false)
     private Long id;
     private String username;
+
     private String password;
     private String email;
     private String fullName;
     //logo?
     private int telephone;
-    private String adress;
+    @NotNull
+    private String address;
     private int bulstat;
     private String website;
     //wallpaper?
     private String description;
     @ManyToMany
-    private Set<Category> category;
+    private Set<Category> categories;
 
     public Long getId() {
         return id;
@@ -73,12 +76,12 @@ public class Community {
         this.telephone = telephone;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getBulstat() {
@@ -105,11 +108,11 @@ public class Community {
         this.description = description;
     }
 
-    public Set<Category> getCategory() {
-        return category;
+    public Set<Category> getCategories() {
+        return categories;
     }
 
-    public void setCategory(Set<Category> category) {
-        this.category = category;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }

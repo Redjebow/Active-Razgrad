@@ -16,7 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/users")
 public class UserController {
     public UserService userService;
-    public UserController(UserService userService){
+    public UserMapper userMapper;
+    public UserController(UserService userService, UserMapper userMapper){
+
+        this.userMapper = userMapper;
         this.userService = userService;
     }
 
@@ -25,16 +28,23 @@ public class UserController {
 
     @GetMapping("/add")
     public String addUserForm(Model model){
-        model.addAttribute("user", new User());
-        return "register";
+        model.addAttribute("user", new UserDTO());
+        return "user-register";
     }
     @PostMapping("/submit")
-    public ModelAndView submitUser(@Valid @ModelAttribute User user, BindingResult bindingResult, Model model ){
+    public ModelAndView submitUser(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model ){
         if(bindingResult.hasErrors()) {
-            model.addAttribute("user", user);
-            return new ModelAndView("register");
+            model.addAttribute("user", userDTO);
+            return new ModelAndView("user-register");
         }
-        userService.saveUser(userService.makeCryotedPassword(user));
+        if(!userDTO.getPassword().equals(userDTO.getRepeatPassword())){
+            model.addAttribute("PasswordDoNotMatch", "Password Do Not Match");
+            model.addAttribute("user", userDTO);
+            return new ModelAndView("user-register");
+        }
+
+        User user = userMapper.toEntity(userService.makeCryptedPassword(userDTO));
+        userService.saveUser(user);
 
         return new ModelAndView("result");
     }

@@ -1,20 +1,25 @@
 package com.example.Active.Razgrad.community;
 
 import com.example.Active.Razgrad.category.Category;
-import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+import java.util.Set;
 
 public class CommunityDTO {
     private String username;
+    @Size(min = 8)
     private String password;
     private String repeatPassword;
     private String email;
     private String fullName;
     private int telephone;
-    private String adress;
+    @NotNull
+    private String address;
     private int bulstat;
     private String website;
     private String description;
-    private Category category;
+    private Set<Category> categories;
 
     public String getUsername() {
         return username;
@@ -64,12 +69,12 @@ public class CommunityDTO {
         this.telephone = telephone;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getBulstat() {
@@ -96,11 +101,11 @@ public class CommunityDTO {
         this.description = description;
     }
 
-    public Category getCategory() {
-        return category;
+    public Set<Category> getCategories() {
+        return categories;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
