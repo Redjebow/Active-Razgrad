@@ -33,8 +33,8 @@ public class WebSecurityConfig {
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/index")
                         .usernameParameter("userNameOrEmail")
+                        .defaultSuccessUrl("/index",true)
                         .permitAll()
                 )
                 .logout((logout) -> logout

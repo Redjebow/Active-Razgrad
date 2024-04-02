@@ -27,7 +27,7 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" th:unless="${#authorization.expression('isAuthenticated()')}">
                 <a class="nav-link dropdown-toggle" href="#" id="registerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="fas fa-user"></span> Регистрация
                 </a>
@@ -36,7 +36,7 @@
                     <li><a class="dropdown-item" href="/communities/add">За организации</a></li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" th:unless="${#authorization.expression('isAuthenticated()')}">
                 <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="fas fa-sign-in-alt"></span> Вход
                 </a>
