@@ -45,4 +45,27 @@ public class WebSecurityConfig {
 
         return http.build();
     }
+
+    @Bean
+    public SecurityFilterChain communitySecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/", "/activity/list", "/home", "/register").permitAll()
+                        .requestMatchers("/community/details", "/events/add").authenticated()
+                        .requestMatchers("/activity/edit", "/activity/delete", "/activity/add").hasAuthority("ROLE_ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .formLogin((form) -> form
+                        .loginPage("/community-login") // Customize login page for community members
+                        .usernameParameter("usernameOrEmail")
+                        .defaultSuccessUrl("/home", true)
+                        .permitAll()
+                )
+                .logout((logout) -> logout
+                        .permitAll()
+                        .logoutSuccessUrl("/"))
+                .exceptionHandling().accessDeniedPage("/access-denied");
+
+        return http.build();
+    }
 }
