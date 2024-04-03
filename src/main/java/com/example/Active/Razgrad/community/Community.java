@@ -1,6 +1,5 @@
 package com.example.Active.Razgrad.community;
 
-import com.example.Active.Razgrad.category.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -25,8 +24,9 @@ public class Community {
     private String website;
     //wallpaper?
     private String description;
-    @ManyToMany
-    private Set<Category> categories;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     public Long getId() {
         return id;
@@ -108,11 +108,11 @@ public class Community {
         this.description = description;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

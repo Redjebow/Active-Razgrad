@@ -1,5 +1,8 @@
 package com.example.Active.Razgrad.user;
 
+import com.example.Active.Razgrad.community.Community;
+import com.example.Active.Razgrad.community.CommunityRepository;
+import com.example.Active.Razgrad.community.MyCommunityDetails;
 import com.example.Active.Razgrad.user.MyUserDetails;
 import com.example.Active.Razgrad.user.User;
 import com.example.Active.Razgrad.user.UserRepository;
@@ -14,18 +17,36 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private
     UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String userNameOrEmail)
-            throws UsernameNotFoundException {
-        User userByUsername = userRepository.getUserByUsername(userNameOrEmail);
-        User userByEmail = userRepository.getUserByEmail(userNameOrEmail);
+    @Autowired
+    private CommunityRepository communityRepository;
 
-        if (userByUsername != null) {
-            return new MyUserDetails(userByUsername);
-        } else if (userByEmail != null) {
-            return new MyUserDetails(userByEmail);
+//    @Override
+//    public UserDetails loadUserByUsername(String userNameOrEmail)
+//            throws UsernameNotFoundException {
+//        User userByUsername = userRepository.getUserByUsername(userNameOrEmail);
+//        User userByEmail = userRepository.getUserByEmail(userNameOrEmail);
+//
+//        if (userByUsername != null) {
+//            return new MyUserDetails(userByUsername);
+//        } else if (userByEmail != null) {
+//            return new MyUserDetails(userByEmail);
+//        }
+//        throw new UsernameNotFoundException("Could not find user");
+//    }
+
+    @Override
+    public UserDetails loadUserByUsername(String userNameOrEmail) throws UsernameNotFoundException {
+        User user = userRepository.getUserByUsername(userNameOrEmail);
+        if (user != null) {
+            return new MyUserDetails(user);
         }
-        throw new UsernameNotFoundException("Could not find user");
+
+        Community community = communityRepository.getCommunityByUsername(userNameOrEmail);
+        if (community != null) {
+            return new MyCommunityDetails(community);
+        }
+
+        throw new UsernameNotFoundException("Could not find user or community with the provided username or email");
     }
 
 }

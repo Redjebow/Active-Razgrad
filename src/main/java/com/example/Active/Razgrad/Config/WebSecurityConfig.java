@@ -27,7 +27,6 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/","/index","/users/**","/communities/**","/user_register","/community_register").permitAll()
-                        //.requestMatchers("/films/add","/user-profile").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/actors/**", "/nationality/**").hasAnyAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -56,7 +55,7 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
-                        .loginPage("/community-login") // Customize login page for community members
+                        .loginPage("/community-login")
                         .usernameParameter("usernameOrEmail")
                         .defaultSuccessUrl("/home", true)
                         .permitAll()
