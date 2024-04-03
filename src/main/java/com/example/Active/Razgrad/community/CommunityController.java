@@ -67,4 +67,6 @@ public class CommunityController {
     private String accessDenied() {
         return "/accessDenied";
     }
+
+
 }
