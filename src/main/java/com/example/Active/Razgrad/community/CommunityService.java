@@ -6,6 +6,8 @@ import com.example.Active.Razgrad.community.CommunityRepository;
 import com.example.Active.Razgrad.user.UserDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 @Service
 public class CommunityService {
@@ -26,9 +28,31 @@ public class CommunityService {
     }
 
     public void saveCommunity(Community community) {
-
-
         communityRepository.save(community);
+    }
+
+    public String addCommunity(CommunityDTO communityDTO, BindingResult bindingResult, Model model){
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("community", communityDTO);
+
+            model.addAttribute("category",Category.values());
+            return "community-register";
+        }
+
+        if (!communityDTO.getPassword().equals(communityDTO.getRepeatPassword())) {
+            model.addAttribute("PasswordDoNotMatch", "Password Do Not Match");
+            model.addAttribute("community", communityDTO);
+
+            model.addAttribute("category",Category.values());
+            return "community-register";
+        }
+
+        Community community = communityMapper.toEntity(makeCryptedPassword(communityDTO));
+        saveCommunity(community);
+
+        return "redirect:/index";
+
     }
 }
 

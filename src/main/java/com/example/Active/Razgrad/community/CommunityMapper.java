@@ -15,7 +15,7 @@ public class CommunityMapper {
         community.setBulstat(communityDTO.getBulstat());
         community.setWebsite(communityDTO.getWebsite());
         community.setDescription(communityDTO.getDescription());
-        community.setCategories(community.getCategories());
+        community.setCategory(communityDTO.getCategory());
         return community;
     }
 }

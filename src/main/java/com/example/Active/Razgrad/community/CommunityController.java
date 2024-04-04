@@ -1,8 +1,6 @@
 package com.example.Active.Razgrad.community;
 
 import com.example.Active.Razgrad.category.CategoryRepository;
-import com.example.Active.Razgrad.user.User;
-import com.example.Active.Razgrad.user.UserDTO;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -32,30 +30,17 @@ public class CommunityController {
     @GetMapping("/add")
     public String addCommunityForm(Model model) {
         model.addAttribute("community", new CommunityDTO());
-        model.addAttribute("categories", categoryRepository.findAll() );
+        model.addAttribute("category", Category.values() );
         return "community-register";
     }
 
     @PostMapping("/submit")
-    public ModelAndView submitUser(@Valid @ModelAttribute CommunityDTO communityDTO, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("community", communityDTO);
-            return new ModelAndView("community-register");
-        }
-        if (!communityDTO.getPassword().equals(communityDTO.getRepeatPassword())) {
-            model.addAttribute("PasswordDoNotMatch", "Password Do Not Match");
-            model.addAttribute("community", communityDTO);
-            return new ModelAndView("community-register");
-        }
-
-        Community community = communityMapper.toEntity(communityService.makeCryptedPassword(communityDTO));
-        communityService.saveCommunity(community);
-
-        return new ModelAndView("result");
+    public String submitCommunity(@Valid @ModelAttribute CommunityDTO communityDTO, BindingResult bindingResult, Model model) {
+        return communityService.addCommunity(communityDTO,bindingResult,model);
     }
 
     @GetMapping("/details")
-    public String getUserDetails(Model model, Authentication authentication) {
+    public String getCommunityDetails(Model model, Authentication authentication) {
         String username = authentication.getName();
         Community community = communityRepository.getCommunityByUsername(username);
 

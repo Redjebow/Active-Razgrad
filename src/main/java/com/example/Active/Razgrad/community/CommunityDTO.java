@@ -1,6 +1,5 @@
 package com.example.Active.Razgrad.community;
 
-import com.example.Active.Razgrad.category.Category;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -19,7 +18,7 @@ public class CommunityDTO {
     private int bulstat;
     private String website;
     private String description;
-    private Set<Category> categories;
+    private Category category;
 
     public String getUsername() {
         return username;
@@ -101,11 +100,11 @@ public class CommunityDTO {
         this.description = description;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

@@ -8,10 +8,10 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-<header th:insert="fragments/header.html"></header>
+<header th:insert="~{fragments/header.html}"></header>
 <br><br>
 <div class="container text-center">
-    <h1>Registration</h1>
+    <h1 style="color:#ff6e7f;">Регистрирай организация</h1>
     <div class="row align-items-center">
         <div class="col">
             <br><br>
@@ -70,19 +70,18 @@
                     </tr>
                     <tr>
                         <td>Направление на организацията*</td>
-                        <td><select th:field="*{categories}" multiple>
-                            <option th:each="category : ${categories}"
-                                    th:value="${category.id}"
-                                    th:text="${category.name}"></option>
+                        <td><select th:field="*{category}" multiple>
+                            <option th:each="category : ${category}"
+                                    th:value="${category.name}"
+                                    th:text="${category.getLabel}"></option>
                         </select></td>
-                        <td th:if="${#fields.hasErrors('categories')}" th:errors="*{categories}"></td>
+                        <td th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></td>
                     </tr>
-
                     <td>
-                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="submit" class="btn btn-success">Запази</button>
                     </td>
                     <td>
-                        <button type="reset" class="btn btn-success">Reset</button>
+                        <button type="reset" class="btn btn-success">Изчисти</button>
                     </td>
                     </tr>
                 </table>
