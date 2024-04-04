@@ -26,7 +26,7 @@
                                 <div th:if="${param.logout}">
                                     You have been logged out.
                                 </div>
-                                <form  th:action="@{/community-login}" method="post">
+                                <form  th:action="@{/login}" method="post">
                                     <fieldset class="p-4">
                                         <input class="form-control mb-3" type="text" name="userNameOrEmail" placeholder="User Name or E-mail :" required>
                                         <input class="form-control mb-3" type="password" name="password" placeholder="Password" required>

@@ -49,6 +49,7 @@ public class CommunityService {
         }
 
         Community community = communityMapper.toEntity(makeCryptedPassword(communityDTO));
+        community.setRole("ROLE_COMMUNITY");
         saveCommunity(community);
 
         return "redirect:/index";

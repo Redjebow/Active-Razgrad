@@ -1,33 +1,40 @@
-<nav class="navbar navbar-expand-lg  navbar-dark" style="background: linear-gradient(to right, #ff6e7f, #bfe9ff);padding: 30px 0;" xmlns:th="http://www.w3.org/1999/xhtml">
+<nav class="navbar navbar-expand-lg  navbar-dark"
+     style="background: linear-gradient(to right, #ff6e7f, #bfe9ff);padding: 30px 0;"
+     xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#" style="font-size: 30px;">
-<!--                тази картинка не се вижда нзм защо-->
-                <img src="images/recreational-removebg-preview.png" alt="" width="80" height="40" >ActiveRazgrad
+                <!--                тази картинка не се вижда нзм защо-->
+                <img src="images/recreational-removebg-preview.png" alt="" width="80" height="40">ActiveRazgrad
             </a>
         </div>
-            <ul class="nav nav-pills nav-fill justify-content-center mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="pill" aria-current="page" href="/">Начало</a>
-                </li>
+        <ul class="nav nav-pills nav-fill justify-content-center mr-auto">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="pill" aria-current="page" href="/">Начало</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" data-bs-toggle="dropdown" href="#" role="button"
+                   aria-expanded="false">Организации</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Списък</a></li>
+                    <li><a class="dropdown-item" href="/communities/add">Регистрирай Организация</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" data-bs-toggle="dropdown" href="#" role="button"
+                   aria-expanded="false">Събития</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/activity/list">Всички събития</a></li>
+                    <li><a class="dropdown-item" href="#">Нещо друго?</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+
+            <th:block th:if="${#authorization.expression('isAnonymous()')}">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle font-weight-bold" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Организации</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Списък</a></li>
-                        <li><a class="dropdown-item" href="/communities/add">Регистрирай Организация</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle font-weight-bold" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Събития</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/activity/list">Всички събития</a></li>
-                        <li><a class="dropdown-item" href="#">Нещо друго?</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right" >
-                <li class="nav-item dropdown"  >
-                    <a class="nav-link dropdown-toggle font-weight-bold " style="color:#ff6e7f;" href="#" id="registerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle font-weight-bold " style="color:#ff6e7f;" href="#"
+                       id="registerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="fas fa-user"></span> Регистрация
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="registerDropdown">
@@ -35,21 +42,30 @@
                         <li><a class="dropdown-item" href="/communities/add">За организации</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown" >
-                    <a class="nav-link dropdown-toggle font-weight-bold" style="color:#ff6e7f;" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="fas fa-sign-in-alt"></span> Вход
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="loginDropdown">
-                        <li><a class="dropdown-item" href="/login">За Потребители</a></li>
-                        <li><a class="dropdown-item" href="/community-login">За Организации</a></li>
-                    </ul>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle font-weight-bold" style="color:#ff6e7f;" href="#" id="loginDropdown"
+                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="fas fa-sign-in-alt"></span> Вход
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="loginDropdown">
+                    <li><a class="dropdown-item" href="/login">За Потребители</a></li>
+                    <li><a class="dropdown-item" href="/community-login">За Организации</a></li>
+                </ul>
+            </li>
+            </th:block>
+            <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+                <li class="nav-item">
+                    <a th:class="nav-link" th:href="@{/user-profile}">
+                    <span th:inline="text">Logged in as <span
+                            th:text="${#authentication.getPrincipal().getFirstName()+' '+#authentication.getPrincipal().getLastName()}"></span></span></a>
                 </li>
-                <li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}">
-                    <form th:action="@{/logout}" method="post" class="nav-link">
-                        <button type="submit" class="btn btn-link"><span class="fas fa-sign-out-alt"></span> Изход</button>
+                <li>
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" class="btn btn-link nav-link" value="Logout"/>
                     </form>
                 </li>
-            </ul>
+            </th:block>
+        </ul>
 
     </div>
 </nav>

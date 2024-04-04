@@ -23,11 +23,10 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/","/index","/users/**","/communities/**","/user_register","/community_register").permitAll()
-                        .requestMatchers("/actors/**", "/nationality/**").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers("/","/index","/community-login","/users/**","/communities/**","/login","/user_register","/community_register").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -49,15 +48,13 @@ public class WebSecurityConfig {
     public SecurityFilterChain communitySecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/activity/list", "/home", "/register").permitAll()
-                        .requestMatchers("/community/details", "/events/add").authenticated()
-                        .requestMatchers("/activity/edit", "/activity/delete", "/activity/add").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/","/index","/community-login","/users/**","/communities/**","/login","/user_register","/community_register").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/community-login")
                         .usernameParameter("usernameOrEmail")
-                        .defaultSuccessUrl("/home", true)
+                        .defaultSuccessUrl("/index", true)
                         .permitAll()
                 )
                 .logout((logout) -> logout
