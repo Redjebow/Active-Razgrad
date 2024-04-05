@@ -1,6 +1,7 @@
 package com.example.Active.Razgrad.community;
 
-import com.example.Active.Razgrad.category.CategoryRepository;
+import com.example.Active.Razgrad.user.User;
+import com.example.Active.Razgrad.user.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -17,14 +18,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class CommunityController {
     private CommunityMapper communityMapper;
     private CommunityService communityService;
-    private CommunityRepository communityRepository;
-    private CategoryRepository categoryRepository;
+    private UserRepository userRepository;
 
-    public CommunityController(CategoryRepository categoryRepository, CommunityRepository communityRepository, CommunityService communityService, CommunityMapper communityMapper) {
+    public CommunityController(CommunityService communityService, CommunityMapper communityMapper, UserRepository userRepository) {
         this.communityMapper = communityMapper;
         this.communityService = communityService;
-        this.communityRepository = communityRepository;
-        this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/add")
@@ -42,7 +41,7 @@ public class CommunityController {
     @GetMapping("/details")
     public String getCommunityDetails(Model model, Authentication authentication) {
         String username = authentication.getName();
-        Community community = communityRepository.getCommunityByUsername(username);
+        User community = userRepository.getUserByUsername(username);
 
         model.addAttribute("community", community);
         return "community-profile";

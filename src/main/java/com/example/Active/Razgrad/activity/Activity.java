@@ -1,8 +1,9 @@
 package com.example.Active.Razgrad.activity;
 
-import com.example.Active.Razgrad.category.Category;
 import com.example.Active.Razgrad.comments.Comment;
-import com.example.Active.Razgrad.community.Community;
+import com.example.Active.Razgrad.community.Category;
+//import com.example.Active.Razgrad.community.Community;
+import com.example.Active.Razgrad.user.User;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -20,12 +21,22 @@ public class Activity {
     private int duration;
     private int price;
     @ManyToOne
-    private Community community;
-    @ManyToOne
+    @JoinColumn(name = "community_id")
+    private User communityCreator;
+
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Comment> commentsList;
+
+    public User getCommunityCreator() {
+        return communityCreator;
+    }
+
+    public void setCommunityCreator(User communityCreator) {
+        this.communityCreator = communityCreator;
+    }
 
     public List<Comment> getCommentsList() {
         return commentsList;
@@ -81,14 +92,6 @@ public class Activity {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public Community getCommunity() {
-        return community;
-    }
-
-    public void setCommunity(Community community) {
-        this.community = community;
     }
 
     public Category getCategory() {
