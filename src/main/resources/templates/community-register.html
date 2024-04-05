@@ -51,11 +51,11 @@
                     <tr>
                         <td>Адрес</td>
                         <td><input type="text" th:field="*{address}" class="form-control" required></td>
-                        <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></td>
+<!--                        <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></td>-->
                     </tr>
                     <tr>
                         <td>Булстат</td>
-                        <td><input type="text" th:field="*{bulstat}" class="form-control" required></td>
+                        <td><input type="number" th:field="*{bulstat}" class="form-control" required></td>
                         <td th:if="${#fields.hasErrors('bulstat')}" th:errors="*{bulstat}"></td>
                     </tr>
                     <tr>
@@ -78,10 +78,10 @@
                         <td th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></td>
                     </tr>
                     <td>
-                        <button type="submit" class="btn btn-success">Запази</button>
+                        <button type="submit" class="btn btn-primary font-weight-bold mt-3">Запази</button>
                     </td>
                     <td>
-                        <button type="reset" class="btn btn-success">Изчисти</button>
+                        <button type="reset" class="btn btn-primary font-weight-bold mt-3">Изчисти</button>
                     </td>
                     </tr>
                 </table>

@@ -1,9 +1,11 @@
 package com.example.Active.Razgrad.community;
 
+import com.example.Active.Razgrad.user.Role;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.util.Set;
 
 public class CommunityDTO {
     private String username;
@@ -11,14 +13,24 @@ public class CommunityDTO {
     private String password;
     private String repeatPassword;
     private String email;
-    private String fullName;
+    private String fullName;//user firstName
     private int telephone;
-    @NotNull
     private String address;
-    private int bulstat;
+    private long bulstat;
     private String website;
     private String description;
     private Category category;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
 
     public String getUsername() {
         return username;
@@ -76,11 +88,11 @@ public class CommunityDTO {
         this.address = address;
     }
 
-    public int getBulstat() {
+    public long getBulstat() {
         return bulstat;
     }
 
-    public void setBulstat(int bulstat) {
+    public void setBulstat(long bulstat) {
         this.bulstat = bulstat;
     }
 

@@ -35,18 +35,14 @@
                         <li><a class="dropdown-item" href="/communities/add">За организации</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown" >
-                    <a class="nav-link dropdown-toggle font-weight-bold" style="color:#ff6e7f;" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="fas fa-sign-in-alt"></span> Вход
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="loginDropdown">
-                        <li><a class="dropdown-item" href="/login">За Потребители</a></li>
-                        <li><a class="dropdown-item" href="/community-login">За Организации</a></li>
-                    </ul>
+                <li class="nav-item" th:unless="${#authorization.expression('isAuthenticated()')}">
+                    <form th:action="@{/login}"  class="nav-link">
+                        <button type="submit" class="btn btn-link" style="color:#ff6e7f;" ><span class="fas fa-sign-in-alt"></span> Вход</button>
+                    </form>
                 </li>
                 <li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}">
                     <form th:action="@{/logout}" method="post" class="nav-link">
-                        <button type="submit" class="btn btn-link"><span class="fas fa-sign-out-alt"></span> Изход</button>
+                        <button type="submit" class="btn btn-link" style="color:#ff6e7f;" ><span class="fas fa-sign-out-alt"></span> Изход</button>
                     </form>
                 </li>
             </ul>

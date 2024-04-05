@@ -1,7 +1,8 @@
 package com.example.Active.Razgrad.activity;
 
-import com.example.Active.Razgrad.category.CategoryRepository;
-import com.example.Active.Razgrad.community.CommunityRepository;
+import com.example.Active.Razgrad.community.Category;
+//import com.example.Active.Razgrad.community.CommunityRepository;
+import com.example.Active.Razgrad.user.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,16 +17,15 @@ public class ActivityController {
     private ActivityRepository activityRepository;
     @Autowired
     private ActivityService activityService;
+
     @Autowired
-    private CommunityRepository communityRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private UserRepository userRepository;
 
     @GetMapping("/add")//достъпна за организации и админ
     public String addActivity(Model model){
         model.addAttribute("activity", new Activity());
-        model.addAttribute("community", communityRepository.findAll() );
-        model.addAttribute("category",categoryRepository.findAll() );
+        model.addAttribute("community", userRepository.findAll() );
+        model.addAttribute("category", Category.values());
         return "add-activity";
     }
 

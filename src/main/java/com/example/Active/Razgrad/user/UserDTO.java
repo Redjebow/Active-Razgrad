@@ -1,5 +1,8 @@
 package com.example.Active.Razgrad.user;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 public class UserDTO {
     private String username;
     private String password;
@@ -8,7 +11,8 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private int telephone;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public String getUsername() {
         return username;
@@ -66,11 +70,11 @@ public class UserDTO {
         this.telephone = telephone;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }

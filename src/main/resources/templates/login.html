@@ -14,12 +14,12 @@
     <div class="row align-items-center">
         <div class="col">
             <br><br>
-            <section class="login py-5 border-top-1">
+            <section class="login py-5 border-top-1 border-bottom-1 border-start-0 border-end-0">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-5 col-md-8 align-item-center">
-                            <div class="border">
-                                <h3 class="bg-gray p-4">Вход за потребители</h3>
+                            <div class="border border-3 rounded">
+                                <h3 class="bg-gray p-4" style="color:#ff6e7f;">Вход</h3>
                                 <div th:if="${param.error}">
                                     Invalid username and password.
                                 </div>
@@ -33,9 +33,9 @@
 
                                         <button type="submit" class="btn btn-primary font-weight-bold mt-3">Вход</button>
 
-                                        <a class="mt-3 d-inline-block text-primary" th:href="@{/users/add}">Регистрирай се като потребител</a>
+                                        <a class="btn btn-primary font-weight-bold mt-3" th:href="@{/users/add}">Регистрирай се като потребител</a>
                                         <br>
-                                        <a class="mt-3 d-inline-block text-primary" th:href="@{/communities/add}">Регистрирай организация</a>
+                                        <a class="btn btn-primary font-weight-bold mt-3" th:href="@{/communities/add}">Регистрирай организация</a>
 
                                     </fieldset>
                                 </form>
