@@ -6,11 +6,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -26,12 +25,23 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("/add")
-    public String addUserForm(Model model){
+    @GetMapping("/addRoleUser")
+    public String addUserUserRole(Model model){
         model.addAttribute("user", new UserDTO());
         return "user-register";
     }
-    @PostMapping("/submit")
+    @GetMapping("/addRoleCommunity")
+    public String addUserCommunityRole(Model model){
+        model.addAttribute("user", new User());
+        return "community-register";
+    }
+    @GetMapping("/all")
+    public String getAllCommunityRoleUser(Model model){
+        List<User>communityRoleUsers = userRepository.getUserByRole(Role.ROLE_COMMUNITY);
+        model.addAttribute("communityUsers",communityRoleUsers);
+        return "all-communityUsers";
+    }
+    @PostMapping("/submitUser")
     public ModelAndView submitUser(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model ){
         if(bindingResult.hasErrors()) {
             model.addAttribute("user", userDTO);
@@ -44,7 +54,17 @@ public class UserController {
         }
 
         User user = userMapper.toEntity(userService.makeCryptedPassword(userDTO));
-        userService.saveUser(user);
+        userService.saveUserRoleUser(user);
+
+        return new ModelAndView("result");
+    } @PostMapping("/submitCommunity")
+    public ModelAndView submitCommunity(@Valid @ModelAttribute User user, BindingResult bindingResult, Model model ){
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("user", user);
+            return new ModelAndView("community-register");
+        }
+
+        userService.saveUserRoleUser(user);
 
         return new ModelAndView("result");
     }
@@ -61,5 +81,29 @@ public class UserController {
     @GetMapping("/access-denied")
     private String accessDenied() {
         return "/accessDenied";
+    }
+    @GetMapping("/{id}/delete")
+    public ModelAndView deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return new ModelAndView("result");
+    }
+    @GetMapping("/{id}/edit")
+    public String editUser(@PathVariable Long id, Model model) {
+        User user = userService.findById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("role", Role.values());
+        return "editUser";
+    }
+
+    @PostMapping("/update")
+    public ModelAndView updateMeal(@Valid @ModelAttribute User user, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()){
+            model.addAttribute("user", user);
+            model.addAttribute("role", Role.values());
+            return new ModelAndView("editUser");
+
+        }
+        userRepository.save(user);
+        return new ModelAndView("result");
     }
 }
