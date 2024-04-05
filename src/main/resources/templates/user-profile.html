@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" >
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,7 @@
 <header th:insert="fragments/header.html"></header>
 <br><br>
 <div class="container text-center">
-    <h1>Данни за потребителя</h1>
+    <h2>Данни за потребителя</h2>
     <div class="row align-items-center">
         <div class="col">
             <section class="user-profile section">
@@ -23,7 +23,7 @@
                                     <div class="image d-flex justify-content-center">
                                         <img th:src="@{images/user-thumb.jpg}" alt="" class="">
                                     </div>
-                                    <h5 class="text-center" th:text="${#authentication.getPrincipal().getFirstName()+' '+#authentication.getPrincipal().getLastName()}"></h5>
+                                    <h5 class="text-center" th:text="${#authentication.getPrincipal().getFirstName()}"></h5>
                                 </div>
                             </div>
                         </div>
@@ -32,21 +32,38 @@
                                 <div class="col-lg-6 col-md-6">
                                     <div class="widget personal-info">
                                             <div class="form-group">
-                                                <label style="font-size: 14px;">First Name: </label>
+                                                <label style="font-size: 14px;">Име: </label>
                                                 <span  th:text="${#authentication.getPrincipal().getFirstName()}"></span>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" sec:authorize="hasRole('USER')">
                                                 <label style="font-size: 14px;">Last Name: </label>
                                                 <span th:text="${#authentication.getPrincipal().getLastName()}"></span>
                                             </div>
+                                        <div class="form-group">
+                                            <label style="font-size: 14px;">Тип на акаунта </label>
+                                            <span th:text="${#authentication.getPrincipal().getRole()}"></span>
+                                        </div>
                                             <div class="form-group">
                                                 <label style="font-size: 14px;">E-mail: </label>
                                                 <span th:text="${#authentication.getPrincipal().getEmail()}"></span>
                                             </div>
-                                            <div class="form-group">
-                                                <label style="font-size: 14px;">Role: </label>
-                                                <span th:text="${#authentication.getPrincipal().getRole()}"></span>
-                                            </div>
+                                        <div class="form-group">
+                                            <label style="font-size: 14px;">Телефон за контакти: </label>
+                                            <span th:text="${#authentication.getPrincipal().getTelephone()}"></span>
+                                        </div>
+                                        <div class="form-group" sec:authorize="hasRole('COMMUNITY')">
+                                            <label style="font-size: 14px;">Булстат: </label>
+                                            <span th:text="${#authentication.getPrincipal().getBulstat()}"></span>
+                                        </div>
+                                        <div class="form-group" sec:authorize="hasRole('COMMUNITY')">
+                                            <label style="font-size: 14px;">Описание: </label>
+                                            <span th:text="${#authentication.getPrincipal().getDescription()}"></span>
+                                        </div>
+                                        <div class="form-group" sec:authorize="hasRole('COMMUNITY')">
+                                            <label style="font-size: 14px;">Категория: </label>
+                                            <span th:text="${#authentication.getPrincipal().getCategory()}"></span>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

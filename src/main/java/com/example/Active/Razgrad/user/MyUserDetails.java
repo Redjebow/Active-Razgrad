@@ -1,5 +1,6 @@
 package com.example.Active.Razgrad.user;
 
+import com.example.Active.Razgrad.community.Category;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,8 +35,12 @@ public class MyUserDetails implements UserDetails {
     public String getFirstName(){return  user.getFirstName();}
 
     public String getLastName(){return user.getLastName();}
-//    public String getRole(){return user.getRole();}
+    public Role getRole(){return user.getRole();}
     public String getEmail(){return user.getEmail();}
+    public int getTelephone(){return user.getTelephone();}
+    public long getBulstat(){return user.getBulstat();}
+    public String getDescription(){return user.getDescription();}
+    public Category getCategory(){return user.getCategory();}
     @Override
     public boolean isAccountNonExpired() {
         return true;
