@@ -11,7 +11,7 @@
 <header th:insert="fragments/header.html"></header>
 <br><br>
 <div class="container text-center">
-    <h1>Edit Meal</h1>
+    <h1>Промяна на потребител</h1>
     <div class="row align-items-center">
         <div class="col">
             <br><br>
@@ -21,9 +21,6 @@
                     <input type="hidden" th:field="*{id}">
                     <input type="hidden" th:field="*{username}">
                     <input type="hidden" th:field="*{password}">
-                    <input type="hidden" th:field="*{id}">
-                    <input type="hidden" th:field="*{id}">
-                    <input type="hidden" th:field="*{id}">
                     <tr>
                         <td>Е-майл</td>
                         <td><input type="email" th:field="*{email}" class="form-control" required></td>
@@ -60,11 +57,25 @@
                     </tr>
                     <tr>
                         <td>Tип на акаунта*</td>
-                        <select th:field="*{role}" class="form-control" required>
-                            <option th:each="role : ${T(com.example.YourPackage.Role).values()}"
-                                    th:value="${role}" th:text="${role}">
-                            </option>
-                        </select>
+                        <td>
+                            <select th:field="*{role}" class="form-control" required>
+                                <option value="" disabled selected hidden>Изберете тип на акаунта</option>
+                                <option th:each="role : ${T(com.example.Active.Razgrad.user.Role).values()}"
+                                        th:value="${role}" th:text="${role.getLabel()}">
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Категгория на акаунта*</td>
+                        <td>
+                            <select th:field="*{category}" class="form-control" required>
+                                <option value="" disabled selected hidden>Изберете гатегория</option>
+                                <option th:each="category : ${T(com.example.Active.Razgrad.community.Category).values()}"
+                                        th:value="${category}" th:text="${category.getLabel()}">
+                                </option>
+                            </select>
+                        </td>
                     </tr>
                     <td>
                         <button type="submit" class="btn btn-primary font-weight-bold mt-3">Запази</button>

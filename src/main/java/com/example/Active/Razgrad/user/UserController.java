@@ -1,5 +1,6 @@
 package com.example.Active.Razgrad.user;
 
+import com.example.Active.Razgrad.community.Category;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -9,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -32,14 +34,22 @@ public class UserController {
     }
     @GetMapping("/addRoleCommunity")
     public String addUserCommunityRole(Model model){
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new UserDTO());
+        model.addAttribute("category", Category.values());
         return "community-register";
     }
-    @GetMapping("/all")
+    @GetMapping("/all-communityUsers")
     public String getAllCommunityRoleUser(Model model){
         List<User>communityRoleUsers = userRepository.getUserByRole(Role.ROLE_COMMUNITY);
         model.addAttribute("communityUsers",communityRoleUsers);
         return "all-communityUsers";
+    }
+    @GetMapping("/all")
+    public String getAllUsers(Model model){
+        List<User> users = (List<User>) userRepository.findAll();
+        Collections.reverse(users);
+        model.addAttribute("users",users);
+        return "all-users";
     }
     @PostMapping("/submitUser")
     public ModelAndView submitUser(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model ){
@@ -58,13 +68,19 @@ public class UserController {
 
         return new ModelAndView("result");
     } @PostMapping("/submitCommunity")
-    public ModelAndView submitCommunity(@Valid @ModelAttribute User user, BindingResult bindingResult, Model model ){
+public ModelAndView submitCommunity(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model ){
         if(bindingResult.hasErrors()) {
-            model.addAttribute("user", user);
+            model.addAttribute("user", userDTO);
             return new ModelAndView("community-register");
         }
-
-        userService.saveUserRoleUser(user);
+        if(!userDTO.getPassword().equals(userDTO.getRepeatPassword())){
+            model.addAttribute("PasswordDoNotMatch", "Password Do Not Match");
+            model.addAttribute("user", userDTO);
+            model.addAttribute("category", Category.values());
+            return new ModelAndView("community-register");
+        }
+        User user = userMapper.toEntity(userService.makeCryptedPassword(userDTO));
+        userService.saveUserRoleCommunity(user);
 
         return new ModelAndView("result");
     }
@@ -73,7 +89,6 @@ public class UserController {
     public String getUserDetails(Model model, Authentication authentication) {
         String username = authentication.getName();
         User user = userRepository.getUserByUsername(username);
-
         model.addAttribute("user", user);
         return "user-profile";
     }
@@ -92,6 +107,7 @@ public class UserController {
         User user = userService.findById(id);
         model.addAttribute("user", user);
         model.addAttribute("role", Role.values());
+        model.addAttribute("category", Category.values());
         return "editUser";
     }
 
@@ -100,6 +116,7 @@ public class UserController {
         if(bindingResult.hasErrors()){
             model.addAttribute("user", user);
             model.addAttribute("role", Role.values());
+            model.addAttribute("category", Category.values());
             return new ModelAndView("editUser");
 
         }

@@ -13,6 +13,11 @@ public class UserMapper {
         user.setLastName(userDTO.getLastName());
         user.setTelephone(userDTO.getTelephone());
         user.setRole(userDTO.getRole());
+        user.setAddress(userDTO.getAddress());
+        user.setBulstat(userDTO.getBulstat());
+        user.setWebsite(userDTO.getWebsite());
+        user.setDescription(userDTO.getDescription());
+        user.setCategory(userDTO.getCategory());
         return user;
     }
 }

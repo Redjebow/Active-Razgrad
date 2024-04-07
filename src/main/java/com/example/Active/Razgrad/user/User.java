@@ -20,7 +20,7 @@ public class User {
     private Role role;
     //полетата на организацията
     private String address;
-    private long bulstat;
+    private int bulstat;
     private String website;
     //wallpaper?
     private String description;
@@ -43,11 +43,11 @@ public class User {
         this.address = address;
     }
 
-    public long getBulstat() {
+    public int getBulstat() {
         return bulstat;
     }
 
-    public void setBulstat(long bulstat) {
+    public void setBulstat(int bulstat) {
         this.bulstat = bulstat;
     }
 
