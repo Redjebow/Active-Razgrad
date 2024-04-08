@@ -35,16 +35,16 @@ public class ActivityService {
         if (optionalActivity.isPresent()) {
             Activity activity = optionalActivity.get();
             model.addAttribute("activity", activity);
-            model.addAttribute("communityCreator", userRepository.findAll() );
+            model.addAttribute("communityCreator", userRepository.getUserByRole(Role.ROLE_COMMUNITY) );
             model.addAttribute("category", Category.values());
-            return "edit-activity";//не е добавена
+            return "edit-activity";
         }
-        return "list-activities";//не е добавена
+        return "list-activities";
     }
 
     public String editActivitySave(Activity activity, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("communityCreator", userRepository.findAll() );
+            model.addAttribute("communityCreator", userRepository.getUserByRole(Role.ROLE_COMMUNITY) );
             model.addAttribute("category",Category.values() );
             return "/activity/edit";
         }

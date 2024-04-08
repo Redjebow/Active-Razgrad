@@ -45,7 +45,7 @@ public class ActivityController {
     public String deleteActivity(@RequestParam Long id, Model model) {
         activityRepository.deleteById(id);
         model.addAttribute("activity",activityRepository.findAll());
-        return "list-activities";//не е добавена
+        return "list-activities";
     }
 
     @GetMapping("/edit")//достъпно за организацията и админ

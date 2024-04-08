@@ -43,6 +43,16 @@ public class Activity {
     @Lob//анотация за голямо количество данни, за изображения
     private byte[] image;
 
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public LocalTime getTimeStart() {
         return timeStart;
     }
