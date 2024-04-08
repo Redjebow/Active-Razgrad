@@ -8,8 +8,8 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -40,8 +40,8 @@ public class Activity {
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Comment> commentsList;
 
-    @Lob//анотация за голямо количество данни, за изображения
-    private byte[] image;
+//    @Lob
+//    private byte[] image;
 
     private String description;
 
@@ -61,13 +61,13 @@ public class Activity {
         this.timeStart = timeStart;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
+//    public byte[] getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(byte[] image) {
+//        this.image = image;
+//    }
 
     public User getCommunityCreator() {
         return communityCreator;
