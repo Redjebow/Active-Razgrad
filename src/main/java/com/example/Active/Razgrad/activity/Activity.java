@@ -2,10 +2,15 @@ package com.example.Active.Razgrad.activity;
 
 import com.example.Active.Razgrad.comments.Comment;
 import com.example.Active.Razgrad.community.Category;
-//import com.example.Active.Razgrad.community.Community;
 import com.example.Active.Razgrad.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -15,10 +20,15 @@ public class Activity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Size(max=200)
     private String name;
-    private Date data;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date;
+    @Size(max=200)
     private String address;
-    private int duration;
+    private LocalTime timeStart;
+    @Min(1)
+    @Max(5000)
     private int price;
     @ManyToOne
     @JoinColumn(name = "community_id")
@@ -29,6 +39,25 @@ public class Activity {
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Comment> commentsList;
+
+    @Lob//анотация за голямо количество данни, за изображения
+    private byte[] image;
+
+    public LocalTime getTimeStart() {
+        return timeStart;
+    }
+
+    public void setTimeStart(LocalTime timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     public User getCommunityCreator() {
         return communityCreator;
@@ -62,12 +91,12 @@ public class Activity {
         this.name = name;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDate() {
+        return date;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getAddress() {
@@ -76,14 +105,6 @@ public class Activity {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
     }
 
     public int getPrice() {

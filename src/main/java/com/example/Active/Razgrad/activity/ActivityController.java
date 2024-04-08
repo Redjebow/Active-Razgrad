@@ -2,6 +2,7 @@ package com.example.Active.Razgrad.activity;
 
 import com.example.Active.Razgrad.community.Category;
 //import com.example.Active.Razgrad.community.CommunityRepository;
+import com.example.Active.Razgrad.user.Role;
 import com.example.Active.Razgrad.user.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class ActivityController {
     @GetMapping("/add")//достъпна за организации и админ
     public String addActivity(Model model){
         model.addAttribute("activity", new Activity());
-        model.addAttribute("community", userRepository.findAll() );
+        model.addAttribute("communityCreator", userRepository.getUserByRole(Role.ROLE_COMMUNITY) );
         model.addAttribute("category", Category.values());
         return "add-activity";
     }
