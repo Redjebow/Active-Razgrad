@@ -24,20 +24,11 @@ public class UserService {
     }
 
     public void saveUserRoleUser(User user) {
-
-        user.setRole(Role.ROLE_USER);
-        user.setAddress("");
-        user.setBulstat(0);
-        user.setDescription("");
-        user.setWebsite("");
-        user.setLastName("");
-        //тези полета ако не ги сетна ми дава че не могат да са Null
         userRepository.save(user);
     }
     public void saveUserRoleCommunity(User user) {
 
         user.setRole(Role.ROLE_COMMUNITY);
-        user.setLastName("");
         //тези полета ако не ги сетна ми дава че не могат да са Null
         userRepository.save(user);
     }
