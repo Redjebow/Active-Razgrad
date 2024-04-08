@@ -1,7 +1,7 @@
 package com.example.Active.Razgrad.activity;
 
 import com.example.Active.Razgrad.community.Category;
-//import com.example.Active.Razgrad.community.CommunityRepository;
+import com.example.Active.Razgrad.user.Role;
 import com.example.Active.Razgrad.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +15,6 @@ public class ActivityService {
 
     @Autowired
     ActivityRepository activityRepository;
-//    @Autowired
-//    private CommunityRepository communityRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -24,12 +22,12 @@ public class ActivityService {
 
     public String addActivity(Activity activity, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("community", userRepository.findAll() );
+            model.addAttribute("communityCreator", userRepository.getUserByRole(Role.ROLE_COMMUNITY) );
             model.addAttribute("category",Category.values() );
             return "add-activity";
         }
         activityRepository.save(activity);
-        return "redirect:/activity/list";
+        return "redirect:/result";
     }
 
     public String editActivity(Long id, Model model) {
@@ -37,16 +35,16 @@ public class ActivityService {
         if (optionalActivity.isPresent()) {
             Activity activity = optionalActivity.get();
             model.addAttribute("activity", activity);
-            model.addAttribute("community", userRepository.findAll() );
+            model.addAttribute("communityCreator", userRepository.getUserByRole(Role.ROLE_COMMUNITY) );
             model.addAttribute("category", Category.values());
-            return "edit-activity";//не е добавена
+            return "edit-activity";
         }
-        return "list-activities";//не е добавена
+        return "list-activities";
     }
 
     public String editActivitySave(Activity activity, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("community", userRepository.findAll() );
+            model.addAttribute("communityCreator", userRepository.getUserByRole(Role.ROLE_COMMUNITY) );
             model.addAttribute("category",Category.values() );
             return "/activity/edit";
         }

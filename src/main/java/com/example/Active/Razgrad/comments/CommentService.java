@@ -24,7 +24,7 @@ public class CommentService {
             model.addAttribute("newComment", new Comment());
             model.addAttribute("selectActivity", activity);
             model.addAttribute("commentsList", activity.getCommentsList());
-            return "add-comment";//ne e dobawen
+            return "add-comment";
         }
         return "redirect:/activity/list";
     }

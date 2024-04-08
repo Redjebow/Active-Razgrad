@@ -1,10 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Activities</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<header th:insert="fragments/header.html"></header>
+<div class="container mt-5">
+    <h1 class="mb-4">Всички събития</h1>
+    <div class="row">
+        <div class="col-md-4 mb-3" th:each="activity : ${activity}">
+            <div class="card">
+                <img class="card-img-top" th:src="'data:image/png;base64,' + ${#strings.bytes(activity.image)}" alt="Activity Image">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${activity.name}"></h5>
+                    <p class="card-text" th:text="${activity.date}"></p>
+                    <p class="card-text" th:text="${activity.address}"></p>
+                    <p class="card-text" th:text="${activity.timeStart}"></p>
+                    <p class="card-text" th:text="${activity.price}"></p>
+                    <p class="card-text" th:text="${activity.communityCreator}"></p>
+                    <p class="card-text" th:text="${activity.category}"></p>
+                    <p class="card-text" th:text="${activity.description}"></p>
+                    <p>Коментари:
+                    <ul>
+                        <li th:each="comment : ${activity.commentsList}">
+                            <span th:text="${comment.message}"></span>
+                        </li>
+                    </ul>
+                    </p>
+                    <p sec:authorize="hasRole('ROLE_ADMIN')">
+                    <form th:action="@{/activity/delete}" th:object="${id}" method="post">
+                        <input type="hidden" name="id" th:value="${activity.id}" />
+                        <button type="submit" class="btn btn-danger">Изтрий</button>
+                    </form>
+                    </p>
+                    <p sec:authorize="hasRole('ROLE_ADMIN')">
+                        <form th:action="@{/activity/edit}" th:object="${id}" method="get">
+                            <input type="hidden" name="id" th:value="${activity.id}" />
+                            <button type="submit" class="btn btn-warning">Редактирай</button>
+                        </form>
+                    </p>
+                    <p th:if="${#authorization.expression('isAuthenticated()')}">
+                        <form th:action="@{/comments}" th:object="${id}" method="get">
+                            <input type="hidden" name="id" th:value="${activity.id}" />
+                            <button type="submit" class="btn btn-success">Коментирай</button>
+                        </form>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
