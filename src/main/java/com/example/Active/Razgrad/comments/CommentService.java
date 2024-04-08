@@ -3,7 +3,11 @@ package com.example.Active.Razgrad.comments;
 
 import com.example.Active.Razgrad.activity.Activity;
 import com.example.Active.Razgrad.activity.ActivityRepository;
+import com.example.Active.Razgrad.activity.ActivityService;
+import com.example.Active.Razgrad.user.User;
+import com.example.Active.Razgrad.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,17 +20,22 @@ public class CommentService {
     private CommentRepository commentRepository;
     @Autowired
     private ActivityRepository activityRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ActivityService activityService;
 
-    public String listAllComments(Long id, Model model) {
-        Optional<Activity> optionalActivity = activityRepository.findById(id);
-        if (optionalActivity.isPresent()) {
-            Activity activity = optionalActivity.get();
-            model.addAttribute("newComment", new Comment());
-            model.addAttribute("selectActivity", activity);
-            model.addAttribute("commentsList", activity.getCommentsList());
-            return "add-comment";
-        }
-        return "redirect:/activity/list";
+    public String allCommentsForActivity(Long id, Model model, Authentication authentication) {
+        User user = userRepository.findByUsername(authentication.getName());
+        Comment comment = new Comment();
+        comment.setUser(user);
+        comment.setActivity(activityService.findActivityById(id));
+        model.addAttribute("newComment", comment);
+        model.addAttribute("selectedActivity", activityService.findActivityById(id));
+        model.addAttribute("commentList", commentRepository.findByActivity(comment.getActivity()));
+
+        return "activity";
+
     }
     public String addComment(Comment comment, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -34,13 +43,13 @@ public class CommentService {
             if (optionalActivity.isPresent()) {
                 Activity activity = optionalActivity.get();
                 model.addAttribute("selectActivity", activity);
-                model.addAttribute("commentsList", activity.getCommentsList());
+                model.addAttribute("commentsList", commentRepository.findByActivity(comment.getActivity()));
                 model.addAttribute("newComment", comment);
-                return "add-comment";
+                return "activity";
             }
             return "redirect:/activity/list";
         }
         commentRepository.save(comment);
-        return "redirect:/activity/list";
+        return "redirect:/activities/all";
     }
 }
