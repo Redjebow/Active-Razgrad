@@ -56,7 +56,8 @@
             <th:block th:if="${#authorization.expression('isAuthenticated()')}">
                 <li class="nav-item">
                     <a th:class="nav-link" th:href="@{/user-profile}">
-                    <span th:inline="text" class="fas fa-sign-out-alt text-primary-emphasis">Logged in as <span
+                        <img src="logo.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill">
+                        <span th:inline="text" class="fas fa-sign-out-alt text-primary-emphasis">Logged in as <span
                             th:text="${#authentication.getPrincipal().getFirstName()}"></span></span></a>
                 </li>
                 <li>

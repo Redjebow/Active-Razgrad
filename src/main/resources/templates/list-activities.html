@@ -10,9 +10,9 @@
 <body>
 <header th:insert="fragments/header.html"></header>
 <div class="container mt-5">
-    <h1 class="mb-4" style="text-align: center;">Всички събития</h1>
+    <h1 class="mb-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3  " style="text-align: center;">Всички събития</h1>
     <div class="row">
-        <div class="col-md-4 mb-3" th:each="activity : ${activity}">
+        <div class="col-md-4 mb-3 " th:each="activity : ${activity}">
             <div class="card">
 <!--                <img class="card-img-top" th:src="'data:image/png;base64,' + ${#strings.bytes(activity.image)}" alt="Activity Image">-->
                 <div class="card-body">

@@ -46,7 +46,7 @@ public class UserController {
     }
     @GetMapping("/all")
     public String getAllUsers(Model model){
-        List<User> users = (List<User>) userRepository.findAll();
+        List<User> users = (List<User>) userRepository.getUserByRole(Role.ROLE_USER);
         Collections.reverse(users);
         model.addAttribute("users",users);
         return "all-users";
