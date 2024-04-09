@@ -17,7 +17,6 @@
                 <td>ID:</td>
                 <td>Потребителско име:</td>
                 <td>Име:</td>
-                <td>Фамилия:</td>
                 <td>Телефон за контакти:</td>
                 <td>Тип на акаунта:</td>
                 <td>Адрес:</td>
@@ -27,8 +26,8 @@
             </tr>
             <tr th:each="user : ${users}">
                 <td th:text="${user.id}">ID</td>
+                <td th:text="${user.username}">Потребителско име:</td>
                 <td th:text="${user.firstName}">Име:</td>
-                <td th:text="${user.lastName}">Фамилия:</td>
                 <td th:text="${user.telephone}">Телефон за контакти:</td>
                 <td th:text="${user.Role}">Тип на акаунта:</td>
                 <td th:text="${user.address}">Адрес:</td>

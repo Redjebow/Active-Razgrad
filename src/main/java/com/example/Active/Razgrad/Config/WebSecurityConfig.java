@@ -27,6 +27,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/","/index","/users/**","/activity/list").permitAll()
+                        .requestMatchers("/activity/add").hasAnyAuthority("ROLE_ADMIN","ROLE_COMMUNITY")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 public class Activity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     @Size(max=200)
@@ -31,7 +31,6 @@ public class Activity {
     @Max(5000)
     private int price;
     @ManyToOne
-    @JoinColumn(name = "community_id")
     private User communityCreator;
 
     @Enumerated(EnumType.STRING)

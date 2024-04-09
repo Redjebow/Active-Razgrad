@@ -28,7 +28,7 @@
                    aria-expanded="false">Събития</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/activity/list">Всички събития</a></li>
-                    <li><a class="dropdown-item" href="/activity/add">Добави събитие</a></li>
+                    <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_COMMUNITY'')')}" ><a class="dropdown-item" href="/activity/add">Добави събитие</a></li>
                     <!--                        само за админ и организации да се ограничи -->
                 </ul>
             </li>

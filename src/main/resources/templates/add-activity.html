@@ -13,7 +13,7 @@
             <div class="col">
                 <br><br>
             <form th:action="@{/activity/save}" th:object="${activity}" method="post" enctype="multipart/form-data">
-            <table sec:authorize= "hasRole('ADMIN')" class="table table-striped">
+            <table class="table table-striped">
                 <tr>
                     <td class="mb-3">Име:<input type="text" th:field="*{name}" required/></td>
                     <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
@@ -36,7 +36,10 @@
                 </tr>
                 <tr>
                     <td>Организация:<select class="form-select" th:field="*{communityCreator}" required>
-                        <option th:each="creator : ${communityCreator}" th:text="${creator.firstName}" th:value="${creator.id}"></option>
+                        <option th:each="creator : ${communityCreator}"
+                                th:text="${creator.firstName}"
+                                th:value="${creator.id}"
+                        </option>
                     </select></td>
                     <td th:if="${#fields.hasErrors('communityCreator')}" th:errors="*{communityCreator}"></td>
                 </tr>

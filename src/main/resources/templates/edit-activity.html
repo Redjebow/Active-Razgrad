@@ -47,9 +47,9 @@
             </select></td>
             <td th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></td>
           </tr>
-          <tr>
-            <td class="mb-3">Снимка:<input type="file" name="image" accept="image/*" required/></td>
-          </tr>
+<!--          <tr>-->
+<!--            <td class="mb-3">Снимка:<input type="file" name="image" accept="image/*" required/></td>-->
+<!--          </tr>-->
           <tr>
             <td class="mb-3">Описание:<input type="text" th:field="*{description}" required/></td>
             <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></td>

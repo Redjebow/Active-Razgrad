@@ -10,21 +10,21 @@
 <body>
 <header th:insert="fragments/header.html"></header>
 <div class="container mt-5">
-    <h1 class="mb-4">Всички събития</h1>
+    <h1 class="mb-4" style="text-align: center;">Всички събития</h1>
     <div class="row">
         <div class="col-md-4 mb-3" th:each="activity : ${activity}">
             <div class="card">
 <!--                <img class="card-img-top" th:src="'data:image/png;base64,' + ${#strings.bytes(activity.image)}" alt="Activity Image">-->
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${activity.name}"></h5>
-                    <p class="card-text" th:text="${activity.date}"></p>
-                    <p class="card-text" th:text="${activity.address}"></p>
-                    <p class="card-text" th:text="${activity.timeStart}"></p>
-                    <p class="card-text" th:text="${activity.price}"></p>
-                    <p class="card-text" th:text="${activity.communityCreator}"></p>
-                    <p class="card-text" th:text="${activity.category}"></p>
-                    <p class="card-text" th:text="${activity.description}"></p>
-                    <p>Коментари:
+                    <h5 class="card-title" style="text-align: center; border-bottom: 1px solid #ccc; padding-bottom: 5px;" th:text="${activity.name}"></h5>
+                    <p><strong>Дата: </strong> <span class="card-text" th:text="${activity.date}"></span></p>
+                    <p><strong>Адрес: </strong> <span class="card-text" th:text="${activity.address}"></span></p>
+                    <p><strong>Начален час: </strong><span class="card-text" th:text="${activity.timeStart}"></span></p>
+                    <p><strong>Цена: </strong><span class="card-text" th:text="${activity.price}"></span></p>
+                    <p><strong>Организация: </strong><span class="card-text" th:text="${activity.communityCreator.getFirstName}"></span></p>
+                    <p><strong>Категория: </strong><span class="card-text" th:text="${activity.category.getLabel}"></span></p>
+                    <p><strong>Описание: </strong><span class="card-text" th:text="${activity.description}"></span></p>
+                    <p><strong>Коментари: </strong>
                     <ul>
                         <li th:each="comment : ${activity.commentsList}">
                             <span th:text="${comment.message}"></span>
