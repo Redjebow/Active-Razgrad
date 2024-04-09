@@ -8,17 +8,16 @@
 </head>
 <body>
 <header th:insert="fragments/header.html"></header>
-<h2 style="text-align: center;"
-    class="p-3 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3"
-    th:text="'Добави коментар за активност: \'' + ${selectActivity.name} + '\''"></h2>
-<div class="container d-flex justify-content-center align-items-center">
+<h2 style="text-align: center;" class="p-3 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3" th:text="'Добави коментар за активност: \'' + ${selectActivity.name} + '\''"></h2>
+<div class="container d-flex justify-content-center align-items-center" >
     <div class="border border-secondary p-4 rounded">
         <form th:action="@{/comments/add}" th:object="${newComment}" method="post">
-            <input type="hidden" th:field="*{activity}" th:value="${newComment.activity.id}"/>
-            <input type="hidden" th:field="*{user}" th:value="${newComment.user.id}"/>
+            <input type="hidden" name="activity.id" th:value="${selectActivity.id}" />
+            <input type="hidden" name="user.id" th:value="${#authentication.principal.id}"/>
             <div class="mb-3">
                 <input type="text" th:field="*{message}" placeholder="Коментар">
                 <div class="message" th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></div>
+
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -26,19 +25,22 @@
 </div>
 <p></p>>
 <div style="margin: 0 auto; width: 80%; text-align: center; border: 4px solid #dee2e6; border-radius: 5px; padding: 10px;">
-    <table class="table table-striped" border="collapse">
+    <table class="table table-striped" border="collapse" >
         <thead>
         <tr>
-            <th> Коментари</th>
+            <th> Потребител </th>
+            <th> Коментари </th>
         </tr>
         </thead>
         <tbody>
         <tr th:if="${commentsList.empty}">
-            <td style="text-align:center" colspan="3"> Липсват коментари.</td>
+            <td style="text-align:center" colspan="3"> Липсват коментари. </td>
         </tr>
         <tr th:each="comment : ${commentsList}">
+            <td th:text="${comment.user.getFirstName}"> Потребител </td>
             <td><span th:text="${comment.message}"> Коментар </span></td>
         </tr>
+
         </tbody>
     </table>
 </div>
