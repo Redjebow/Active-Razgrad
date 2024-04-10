@@ -9,7 +9,7 @@
 <header th:insert="fragments/header.html"></header>
 <div class="container text-left">
   <div class="border border-secondary p-4 rounded">
-    <h2 class="p-3 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3" style="text-align: center; color:#ff6e7f;">Попълнете формата за да добавите събитие!</h2>
+    <h2 class="p-3 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3" style="text-align: center; color:#ff6e7f; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Попълнете формата за да добавите събитие!</h2>
     <div class="col">
       <br><br>
       <form th:action="@{/activity/edit}" th:object="${activity}" method="post" enctype="multipart/form-data">
