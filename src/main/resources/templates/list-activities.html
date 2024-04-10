@@ -6,25 +6,27 @@
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 <body>
 <header th:insert="fragments/header.html"></header>
 <div class="container mt-5">
-    <h1 class="mb-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3  " style="text-align: center;">Всички събития</h1>
+    <h1 class="mb-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3  " style="text-align: center; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">Всички събития</h1>
     <div class="row">
         <div class="col-md-4 mb-3 " th:each="activity : ${activity}">
             <div class="card">
 <!--                <img class="card-img-top" th:src="'data:image/png;base64,' + ${#strings.bytes(activity.image)}" alt="Activity Image">-->
                 <div class="card-body">
                     <h5 class="card-title" style="text-align: center; border-bottom: 1px solid #ccc; padding-bottom: 5px;" th:text="${activity.name}"></h5>
-                    <p><strong>Дата: </strong> <span class="card-text" th:text="${activity.date}"></span></p>
-                    <p><strong>Адрес: </strong> <span class="card-text" th:text="${activity.address}"></span></p>
-                    <p><strong>Начален час: </strong><span class="card-text" th:text="${activity.timeStart}"></span></p>
-                    <p><strong>Цена: </strong><span class="card-text" th:text="${activity.price}"></span></p>
+                    <p><strong>Дата: </strong> <span class="card-text" th:text="${activity.date}"></span> <i class="far fa-calendar-alt"></i></p>
+                    <p><strong>Адрес: </strong> <span class="card-text" th:text="${activity.address}"></span> <i class="fas fa-map-marker-alt"></i></p>
+                    <p><strong>Начален час: </strong><span class="card-text" th:text="${activity.timeStart}"></span> <i class="far fa-regular fa-clock"></i></p>
+                    <p><strong>Цена: </strong><span class="card-text" th:text="${activity.price}"></span> лв. <i class="far fa-money-bill-alt"></i></p>
                     <p><strong>Организация: </strong><span class="card-text" th:text="${activity.communityCreator.getFirstName}"></span></p>
-                    <p><strong>Категория: </strong><span class="card-text" th:text="${activity.category.getLabel}"></span></p>
+                    <p><strong>Категория: </strong><span class="card-text" th:text="${activity.category.getLabel}"></span> <i class="fas fa-icons"></i></p>
                     <p><strong>Описание: </strong><span class="card-text" th:text="${activity.description}"></span></p>
-                    <p><strong>Коментари: </strong>
+                    <p><strong>Коментари: <i class="far fa-comments"></i> </strong>
                     <ul>
                         <li th:each="comment : ${activity.commentsList}">
                             <span th:text="${comment.message}"></span>
