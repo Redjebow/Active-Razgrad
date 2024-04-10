@@ -1,11 +1,11 @@
-<nav class="navbar navbar-expand-lg  navbar-dark"
+<nav class="navbar navbar-expand-lg  navbar-dark "
      style="background: linear-gradient(to right, #ff6e7f, #bfe9ff);padding: 30px 0;"
      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/index" style="font-size: 30px;">
                 <!--                тази картинка не се вижда нзм защо-->
-                <img src="images/recreational-removebg-preview.png" alt="" width="80" height="40">ActiveRazgrad
+                <img src="/images/recreational-removebg-preview.png" alt="" width="80" height="40">ActiveRazgrad
             </a>
         </div>
         <ul class="nav nav-pills nav-fill justify-content-center mr-auto">
@@ -28,7 +28,7 @@
                    aria-expanded="false">Събития</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/activity/list">Всички събития</a></li>
-                    <li><a class="dropdown-item" href="/activity/add">Добави събитие</a></li>
+                    <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'') or hasRole(''ROLE_COMMUNITY'')')}" ><a class="dropdown-item" href="/activity/add">Добави събитие</a></li>
                     <!--                        само за админ и организации да се ограничи -->
                 </ul>
             </li>
@@ -56,7 +56,8 @@
             <th:block th:if="${#authorization.expression('isAuthenticated()')}">
                 <li class="nav-item">
                     <a th:class="nav-link" th:href="@{/user-profile}">
-                    <span th:inline="text" class="fas fa-sign-out-alt text-primary-emphasis">Logged in as <span
+                        <img src="/images/pngegg.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill">
+                        <span th:inline="text" class="fas fa-sign-out-alt text-primary-emphasis">Logged in as <span
                             th:text="${#authentication.getPrincipal().getFirstName()}"></span></span></a>
                 </li>
                 <li>

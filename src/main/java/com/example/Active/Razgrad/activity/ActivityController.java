@@ -39,7 +39,7 @@ public class ActivityController {
     @GetMapping("/list")
     public String listActivities(Model model) {
         model.addAttribute("activity", activityRepository.findAll());
-        return "list-activities";//не е добавена
+        return "list-activities";
     }
 
     @PostMapping("/delete")//достъпно за организацията и админ

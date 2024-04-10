@@ -47,9 +47,9 @@
             </select></td>
             <td th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></td>
           </tr>
-          <tr>
-            <td class="mb-3">Снимка:<input type="file" name="image" accept="image/*" required/></td>
-          </tr>
+<!--          <tr>-->
+<!--            <td class="mb-3">Снимка:<input type="file" name="image" accept="image/*" required/></td>-->
+<!--          </tr>-->
           <tr>
             <td class="mb-3">Описание:<input type="text" th:field="*{description}" required/></td>
             <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></td>
@@ -63,5 +63,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </div>
 </div>
+<footer th:include="fragments/footer.html"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
 </html>

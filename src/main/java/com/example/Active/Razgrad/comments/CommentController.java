@@ -26,15 +26,14 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping()
-    public String getActivity(@PathVariable Long id, Authentication authentication, Model model){
-
-        return commentService.allCommentsForActivity(id, model, authentication);
+    @GetMapping
+    public String listAllComments(Long id, Model model) {
+        return commentService.listAllComments(id, model);
     }
 
     @PostMapping("/add")
-    public String addComment(@Valid @ModelAttribute("newComment") Comment newComment,BindingResult bindingResult, Model model){
-        return commentService.addComment(newComment, bindingResult, model);
+    public String addComment(@Valid @ModelAttribute Comment comment, BindingResult bindingResult, Model model) {
+        return commentService.addComment(comment, bindingResult, model);
     }
 
 }
