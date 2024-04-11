@@ -27,7 +27,7 @@ public class Activity {
     @Size(max=200)
     private String address;
     private LocalTime timeStart;
-    @Min(1)
+    @Min(0)
     @Max(5000)
     private int price;
     @ManyToOne
