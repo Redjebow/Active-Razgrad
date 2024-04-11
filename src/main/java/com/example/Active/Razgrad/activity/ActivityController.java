@@ -23,7 +23,7 @@ public class ActivityController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/add")//достъпна за организации и админ
+    @GetMapping("/add")
     public String addActivity(Model model){
         model.addAttribute("activity", new Activity());
         model.addAttribute("communityCreator", userRepository.getUserByRole(Role.ROLE_COMMUNITY) );
@@ -42,32 +42,21 @@ public class ActivityController {
         return "list-activities";
     }
 
-    @PostMapping("/delete")//достъпно за организацията и админ
+    @PostMapping("/delete")
     public String deleteActivity(@RequestParam Long id, Model model) {
         activityRepository.deleteById(id);
         model.addAttribute("activity",activityRepository.findAll());
         return "list-activities";
     }
 
-    @GetMapping("/edit")//достъпно за организацията и админ
+    @GetMapping("/edit")
     public String editActivity(@RequestParam Long id, Model model) {
         return activityService.editActivity(id, model);
     }
 
-    @PostMapping("/edit")//достъпно за организацията и админ
+    @PostMapping("/edit")
     public String saveActivity(@Valid @ModelAttribute Activity activity, BindingResult bindingResult, Model model) {
         return activityService.editActivitySave(activity, bindingResult, model);
     }
-
-//    @PostMapping("/like")
-//    public String likeActivity(@RequestParam Long id) {
-//        Activity activity = activityRepository.findById(id).orElse(null);
-//        if (activity != null ) {
-//            activity.setLikes(activity.getLikes() + 1);
-//            activityRepository.save(activity);
-//        }
-//        return "redirect:/activity/list";
-//    }ако го искаме като функционалност трябва да се изпипа защото така се добавят лайкове до безкрай и трябва да добавим лайкове като полета в Activity
-
 
 }
