@@ -40,10 +40,16 @@ public class UserController {
     }
     @GetMapping("/all-communityUsers")
     public String getAllCommunityRoleUser(Model model){
-        List<User>communityRoleUsers = userRepository.getUserByRole(Role.ROLE_COMMUNITY);
-        model.addAttribute("communityUsers",communityRoleUsers);
+        userService.getAllCommunityUsers(model);
         return "all-communityUsers";
     }
+
+    @GetMapping("/allCommunities")
+    public String getAllCommunities(Model model){
+        userService.getAllCommunityUsers(model);
+        return "all-communities";
+    }
+
     @GetMapping("/all")
     public String getAllUsers(Model model){
         List<User> users = (List<User>) userRepository.getUserByRole(Role.ROLE_USER);
@@ -97,6 +103,7 @@ public ModelAndView submitCommunity(@Valid @ModelAttribute UserDTO userDTO, Bind
     private String accessDenied() {
         return "/accessDenied";
     }
+
     @GetMapping("/{id}/delete")
     public ModelAndView deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);

@@ -1,6 +1,7 @@
 package com.example.Active.Razgrad.user;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,5 +47,10 @@ public class UserService {
     public User findById(Long id) {
 
         return userRepository.findById(id).orElse(null);
+    }
+
+    public void getAllCommunityUsers(Model model){
+        List<User>communityRoleUsers = userRepository.getUserByRole(Role.ROLE_COMMUNITY);
+        model.addAttribute("communityUsers",communityRoleUsers);
     }
 }

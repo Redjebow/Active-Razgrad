@@ -37,7 +37,7 @@
                         <td th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}"></td>
                     </tr>
                     <tr>
-                        <td>Е-майл</td>
+                        <td>Е-майл <i class="fas fa-envelope"></i></td>
                         <td><input type="email" th:field="*{email}" class="form-control" required></td>
                         <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></td>
                     </tr>
@@ -47,7 +47,7 @@
                         <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></td>
                     </tr>
                     <tr>
-                        <td>Телефон за контакт</td>
+                        <td>Телефон за контакт <i class="fas fa-phone"></i></td>
                         <td><input type="number" th:field="*{telephone}" class="form-control" required></td>
                         <td th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></td>
                     </tr>
