@@ -2,9 +2,11 @@ package com.example.Active.Razgrad.user;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,6 +27,7 @@ public class UserService {
     }
 
     public void saveUserRoleUser(User user) {
+        user.setRole(Role.ROLE_USER);
         userRepository.save(user);
     }
     public void saveUserRoleCommunity(User user) {
@@ -52,5 +55,14 @@ public class UserService {
     public void getAllCommunityUsers(Model model){
         List<User>communityRoleUsers = userRepository.getUserByRole(Role.ROLE_COMMUNITY);
         model.addAttribute("communityUsers",communityRoleUsers);
+    }
+    public boolean cherForExistUserName(UserDTO userDTO) {
+        List<User> optionalUser = (List<User>) userRepository.findAll();
+        for (User currentUser : optionalUser) {
+            if (currentUser.getUsername().equalsIgnoreCase(userDTO.getUsername())) {
+                return true;
+            }
+        }return false;
+
     }
 }
