@@ -21,6 +21,7 @@
             <form action="#" th:action="@{/users/submitUser}" th:object="${user}" method="post">
                 <table class="table table-striped">
                     <tr>
+                        <span th:text="${not_unique_name != null} ? ${not_unique_name}"></span>
                         <td>Потребителско име</td>
                         <td><input type="text" th:field="*{username}" class="form-control" required></td>
                         <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td>

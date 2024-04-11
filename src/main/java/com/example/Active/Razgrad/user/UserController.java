@@ -63,6 +63,11 @@ public class UserController {
             model.addAttribute("user", userDTO);
             return new ModelAndView("user-register");
         }
+        if(userService.cherForExistUserName(userDTO)) {
+            model.addAttribute("not_unique_name", "Username already exist");
+            model.addAttribute("user", userDTO);
+            return new ModelAndView("user-register");
+        }
         if(!userDTO.getPassword().equals(userDTO.getRepeatPassword())){
             model.addAttribute("PasswordDoNotMatch", "Password Do Not Match");
             model.addAttribute("user", userDTO);
