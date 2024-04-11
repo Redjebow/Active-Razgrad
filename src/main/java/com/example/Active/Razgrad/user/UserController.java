@@ -1,15 +1,19 @@
 package com.example.Active.Razgrad.user;
 
+import com.example.Active.Razgrad.FileUploadUtil;
 import com.example.Active.Razgrad.community.Category;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -79,7 +83,7 @@ public class UserController {
 
         return new ModelAndView("result");
     } @PostMapping("/submitCommunity")
-public ModelAndView submitCommunity(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model ){
+public ModelAndView submitCommunity(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model, @RequestParam("image") MultipartFile multipartFile ) throws IOException {
         if(bindingResult.hasErrors()) {
             model.addAttribute("user", userDTO);
             return new ModelAndView("community-register");
@@ -90,9 +94,14 @@ public ModelAndView submitCommunity(@Valid @ModelAttribute UserDTO userDTO, Bind
             model.addAttribute("category", Category.values());
             return new ModelAndView("community-register");
         }
-        User user = userMapper.toEntity(userService.makeCryptedPassword(userDTO));
-        userService.saveUserRoleCommunity(user);
 
+        User user = userMapper.toEntity(userService.makeCryptedPassword(userDTO));
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        user.setPhotos(fileName);
+        userService.saveUserRoleCommunity(user);
+        String uploadDir = "user-photos/" + user.getId();
+
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         return new ModelAndView("result");
     }
 

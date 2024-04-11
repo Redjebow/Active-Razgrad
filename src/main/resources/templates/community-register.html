@@ -18,7 +18,7 @@
     <div class="row align-items-center">
         <div class="col">
             <br><br>
-            <form action="#" th:action="@{/users/submitCommunity}" th:object="${user}" method="post">
+            <form action="#" th:action="@{/users/submitCommunity}" th:object="${user}" method="post" enctype="multipart/form-data">
                 <table class="table table-striped">
                     <tr>
                         <td>Потребителско име</td>
@@ -45,6 +45,11 @@
                         <td>Име на организацията/неформалната група*</td>
                         <td><input type="text" th:field="*{firstName}" class="form-control" required></td>
                         <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></td>
+                    </tr>
+                    <tr>
+                        <td>снимка</td>
+                        <td><input type="file" name="image" accept="image/png, image/jpeg"></td>
+                        <td th:if="${#fields.hasErrors('photos')}" th:errors="*{photos}"></td>
                     </tr>
                     <tr>
                         <td>Телефон за контакт <i class="fas fa-phone"></i></td>

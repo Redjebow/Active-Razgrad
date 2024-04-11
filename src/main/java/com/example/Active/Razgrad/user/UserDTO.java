@@ -1,6 +1,7 @@
 package com.example.Active.Razgrad.user;
 
 import com.example.Active.Razgrad.community.Category;
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
@@ -21,6 +22,8 @@ public class UserDTO {
 
     @Size  (max = 20)
     private String lastName;
+    @Column(nullable = true, length = 64)
+    private String photos;
     @NotNull
     @Min(10)
     private int telephone;
@@ -141,5 +144,13 @@ public class UserDTO {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(String photos) {
+        this.photos = photos;
     }
 }

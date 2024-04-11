@@ -25,6 +25,7 @@
                     <p><strong>Адрес: </strong><span class="card-text" th:text="${community.address}"></span>  <i class="fas fa-map-marker-alt"></i></p>
                     <p><strong>Булстат: </strong><span class="card-text" th:text="${community.bulstat}"></span></p>
                     <p><strong>Описание: </strong><span class="card-text" th:text="${community.description}"></span></p>
+                    <p><strong>Снимка: </strong><img th:src="@{${community.photosImagePath}}" /></p>
 
                 </div>
             </div>
