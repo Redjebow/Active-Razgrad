@@ -27,6 +27,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+
     public Role getRole() {
         return role;
     }

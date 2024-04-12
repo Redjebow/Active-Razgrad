@@ -78,11 +78,9 @@ public class UserController {
             return new ModelAndView("user-register");
         }
 
-        User user = userMapper.toEntity(userService.makeCryptedPassword(userDTO));
-        userService.saveUserRoleUser(user);
-
         return new ModelAndView("result");
-    } @PostMapping("/submitCommunity")
+    } 
+  @PostMapping("/submitCommunity")
 public ModelAndView submitCommunity(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model, @RequestParam("image") MultipartFile multipartFile ) throws IOException {
         if(bindingResult.hasErrors()) {
             model.addAttribute("user", userDTO);
@@ -103,6 +101,10 @@ public ModelAndView submitCommunity(@Valid @ModelAttribute UserDTO userDTO, Bind
 
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         return new ModelAndView("result");
+
+    @PostMapping("/submitCommunity")
+    public String submitCommunity(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model ){
+        return userService.submitCommunity(userDTO,bindingResult,model);
     }
 
     @GetMapping("/details")
