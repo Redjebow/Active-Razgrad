@@ -16,7 +16,8 @@
         </div>
         <ul class="nav nav-pills nav-fill justify-content-center mr-auto">
             <li class="nav-item">
-                <a class="nav-link active" href="/index">Начало</a>
+
+                <a th:class="${#strings.equals(pageTitle,'index') ? 'nav-link active' : 'nav-link'}" href="/index">Начало</a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                 <a class="nav-link btn btn-link btn btn-link" href="/users/all">Потребители</a>
