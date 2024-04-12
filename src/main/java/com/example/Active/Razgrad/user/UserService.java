@@ -1,7 +1,10 @@
 package com.example.Active.Razgrad.user;
+import com.example.Active.Razgrad.community.Category;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,7 @@ public class UserService {
         //тези полета ако не ги сетна ми дава че не могат да са Null
         userRepository.save(user);
     }
+
     public List<User>getAllCommunityRoleUsers(List<User>userList){
         List<User>communityUserList = new ArrayList<>();
         for (User user:userList) {
@@ -41,9 +45,11 @@ public class UserService {
             }
         }return communityUserList;
     }
+
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
     public User findById(Long id) {
 
         return userRepository.findById(id).orElse(null);
@@ -52,5 +58,41 @@ public class UserService {
     public void getAllCommunityUsers(Model model){
         List<User>communityRoleUsers = userRepository.getUserByRole(Role.ROLE_COMMUNITY);
         model.addAttribute("communityUsers",communityRoleUsers);
+    }
+
+
+    public String submitUser(UserDTO userDTO, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("user", userDTO);
+            return "user-register";
+        }
+        if(!userDTO.getPassword().equals(userDTO.getRepeatPassword())){
+            model.addAttribute("PasswordDoNotMatch", "Password Do Not Match");
+            model.addAttribute("user", userDTO);
+            return "user-register";
+        }
+
+        User user = userMapper.toEntity(makeCryptedPassword(userDTO));
+        saveUserRoleUser(user);
+
+        return "result";
+    }
+
+    public String submitCommunity(UserDTO userDTO, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("user", userDTO);
+            return "community-register";
+        }
+        if(!userDTO.getPassword().equals(userDTO.getRepeatPassword())){
+            model.addAttribute("PasswordDoNotMatch", "Password Do Not Match");
+            model.addAttribute("user", userDTO);
+            model.addAttribute("category", Category.values());
+            return "community-register";
+        }
+
+        User user = userMapper.toEntity(makeCryptedPassword(userDTO));
+        saveUserRoleCommunity(user);
+
+        return "result";
     }
 }
