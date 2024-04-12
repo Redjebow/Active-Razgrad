@@ -37,8 +37,15 @@ public class ActivityController {
 
     @GetMapping("/list")
     public String listActivities(Model model) {
+        model.addAttribute("categories", Category.values());
         model.addAttribute("activity", activityRepository.findAll());
         return "list-activities";
+    }
+    @GetMapping("/sortedList")
+    public String sortedListActivities(@RequestParam("category") String category, Model model) {
+        model.addAttribute("categories", Category.values());
+        model.addAttribute("activity", activityService.getAllActivitiesByCategory(category));
+        return "sorted-activities";
     }
 
     @PostMapping("/delete")

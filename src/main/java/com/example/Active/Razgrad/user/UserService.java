@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,12 +80,12 @@ public class UserService {
         return "result";
     }
 
-    public String submitCommunity(UserDTO userDTO, BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()) {
+    public String submitCommunity(UserDTO userDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("user", userDTO);
             return "community-register";
         }
-        if(!userDTO.getPassword().equals(userDTO.getRepeatPassword())){
+        if (!userDTO.getPassword().equals(userDTO.getRepeatPassword())) {
             model.addAttribute("PasswordDoNotMatch", "Password Do Not Match");
             model.addAttribute("user", userDTO);
             model.addAttribute("category", Category.values());
@@ -95,6 +96,7 @@ public class UserService {
         saveUserRoleCommunity(user);
 
         return "result";
+    }
     public boolean cherForExistUserName(UserDTO userDTO) {
         List<User> optionalUser = (List<User>) userRepository.findAll();
         for (User currentUser : optionalUser) {
@@ -103,5 +105,21 @@ public class UserService {
             }
         }return false;
 
+    }
+    public List<User> getAllCommunitiesByCategory(String category) {
+        try {
+            Category userCategory = Category.valueOf(category.toUpperCase());
+            Iterable<User> userIterable = userRepository.findAll();
+            List<User> sortedCommunity = new ArrayList<>();
+            for (User user : userIterable) {
+                if (user.getCategory() != null && user.getCategory().equals(userCategory)) {
+                    sortedCommunity.add(user);
+                }
+            }
+            return sortedCommunity;
+        } catch (IllegalArgumentException e) {
+
+            return Collections.emptyList(); // Връщаме празен списък в случай на грешка
+        }
     }
 }

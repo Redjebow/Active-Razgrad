@@ -13,23 +13,25 @@
 <header th:insert="fragments/header.html"></header>
 <div class="container mt-5">
     <h1 class="mb-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3  " style="text-align: center; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">Всички събития</h1>
-    <div class="row">
-        <form action="#" th:action="@{/activity/sortedList}" th:object="${activity}" method="get">
-            <table>
-                <tr>
-                    <td><select th:name="category">
-                        <option value="">Изберете категория</option>
-                        <option th:each="category : ${categories}"
-                                th:value="${category}"
-                                th:text="${category.getLabel()}"></option>
-                    </select></td>
-                    <td>
-                        <button type="submit" class="btn btn-success">Филтър</button>
-                    </td>
-                </tr>
+    <div class="row"><form action="#" th:action="@{/users/communityByCategory}" th:object="${user}" method="get">
+        <table>
+            <tr>
+                <td><select th:name="category">
+                    <option value="">Изберете категория</option>
+                    <option th:each="category : ${categories}"
+                            th:value="${category}"
+                            th:text="${category.getLabel()}"></option>
+                </select></td>
+                <td>
+                    <button type="submit" class="btn btn-success">Филтър</button>
+                </td>
+            </tr>
 
-            </table>
-        </form>
+        </table>
+    </form>
+        <div th:if="${#lists.isEmpty(activity)}">
+            <p><strong>Няма намерени записи, които отговарят на Вашето търсене.</strong></p>
+        </div>
         <div class="col-md-4 mb-3 " th:each="activity : ${activity}">
             <div class="card">
 <!--                <img class="card-img-top" th:src="'data:image/png;base64,' + ${#strings.bytes(activity.image)}" alt="Activity Image">-->

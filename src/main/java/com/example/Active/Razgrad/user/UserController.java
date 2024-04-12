@@ -44,16 +44,23 @@ public class UserController {
     }
     @GetMapping("/all-communityUsers")
     public String getAllCommunityRoleUser(Model model){
+
         userService.getAllCommunityUsers(model);
         return "all-communityUsers";
     }
 
     @GetMapping("/allCommunities")
     public String getAllCommunities(Model model){
+        model.addAttribute("categories", Category.values());
         userService.getAllCommunityUsers(model);
         return "all-communities";
     }
-
+    @GetMapping("/communityByCategory")
+    public String getCommunityByCategory(@RequestParam("category") String category, Model model){
+        model.addAttribute("categories", Category.values());
+        model.addAttribute("communityUsers", userService.getAllCommunitiesByCategory(category));
+        return "sorted-communities";
+    }
     @GetMapping("/all")
     public String getAllUsers(Model model){
         List<User> users = (List<User>) userRepository.getUserByRole(Role.ROLE_USER);
@@ -82,30 +89,27 @@ public class UserController {
     } 
   @PostMapping("/submitCommunity")
 public ModelAndView submitCommunity(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model, @RequestParam("image") MultipartFile multipartFile ) throws IOException {
-        if(bindingResult.hasErrors()) {
-            model.addAttribute("user", userDTO);
-            return new ModelAndView("community-register");
-        }
-        if(!userDTO.getPassword().equals(userDTO.getRepeatPassword())){
-            model.addAttribute("PasswordDoNotMatch", "Password Do Not Match");
-            model.addAttribute("user", userDTO);
-            model.addAttribute("category", Category.values());
-            return new ModelAndView("community-register");
-        }
+      if (bindingResult.hasErrors()) {
+          model.addAttribute("user", userDTO);
+          return new ModelAndView("community-register");
+      }
+      if (!userDTO.getPassword().equals(userDTO.getRepeatPassword())) {
+          model.addAttribute("PasswordDoNotMatch", "Password Do Not Match");
+          model.addAttribute("user", userDTO);
+          model.addAttribute("category", Category.values());
+          return new ModelAndView("community-register");
+      }
 
-        User user = userMapper.toEntity(userService.makeCryptedPassword(userDTO));
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        user.setPhotos(fileName);
-        userService.saveUserRoleCommunity(user);
-        String uploadDir = "user-photos/" + user.getId();
+      User user = userMapper.toEntity(userService.makeCryptedPassword(userDTO));
+      String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+      user.setPhotos(fileName);
+      userService.saveUserRoleCommunity(user);
+      String uploadDir = "user-photos/" + user.getId();
 
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-        return new ModelAndView("result");
+      FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+      return new ModelAndView("result");
+  }
 
-    @PostMapping("/submitCommunity")
-    public String submitCommunity(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model ){
-        return userService.submitCommunity(userDTO,bindingResult,model);
-    }
 
     @GetMapping("/details")
     public String getUserDetails(Model model, Authentication authentication) {
