@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -28,6 +29,7 @@ public class UserService {
     }
 
     public void saveUserRoleUser(User user) {
+        user.setRole(Role.ROLE_USER);
         userRepository.save(user);
     }
     public void saveUserRoleCommunity(User user) {
@@ -59,7 +61,6 @@ public class UserService {
         List<User>communityRoleUsers = userRepository.getUserByRole(Role.ROLE_COMMUNITY);
         model.addAttribute("communityUsers",communityRoleUsers);
     }
-
 
     public String submitUser(UserDTO userDTO, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
@@ -94,5 +95,13 @@ public class UserService {
         saveUserRoleCommunity(user);
 
         return "result";
+    public boolean cherForExistUserName(UserDTO userDTO) {
+        List<User> optionalUser = (List<User>) userRepository.findAll();
+        for (User currentUser : optionalUser) {
+            if (currentUser.getUsername().equalsIgnoreCase(userDTO.getUsername())) {
+                return true;
+            }
+        }return false;
+
     }
 }

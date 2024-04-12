@@ -57,12 +57,24 @@ public class UserController {
         model.addAttribute("users",users);
         return "all-users";
     }
-
     @PostMapping("/submitUser")
-    public String submitUser(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model ){
-        return userService.submitUser(userDTO, bindingResult, model);
+    public ModelAndView submitUser(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model ){
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("user", userDTO);
+            return new ModelAndView("user-register");
+        }
+        if(userService.cherForExistUserName(userDTO)) {
+            model.addAttribute("not_unique_name", "Username already exist");
+            model.addAttribute("user", userDTO);
+            return new ModelAndView("user-register");
+        }
+        if(!userDTO.getPassword().equals(userDTO.getRepeatPassword())){
+            model.addAttribute("PasswordDoNotMatch", "Password Do Not Match");
+            model.addAttribute("user", userDTO);
+            return new ModelAndView("user-register");
+        }
 
-    }
+
 
     @PostMapping("/submitCommunity")
     public String submitCommunity(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model ){
