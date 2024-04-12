@@ -45,6 +45,10 @@
             <td sec:authorize="hasRole('COMMUNITY')"><strong>Категория: </strong></td>
             <td th:text="${#authentication.getPrincipal().getCategory()}"></td>
         </tr>
+<!--        <tr>-->
+<!--            <td sec:authorize="hasRole('COMMUNITY')"><strong>Снимка: </strong></td>-->
+<!--            <td><img th:src="@{${#authentication.getPrincipal().photosImagePath}}" /></td>-->
+<!--        </tr>-->
     </table>
     <form th:action="@{/logout}" method="post">
         <input type="submit" value="Log Out"/>

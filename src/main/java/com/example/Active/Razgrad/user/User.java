@@ -2,7 +2,6 @@ package com.example.Active.Razgrad.user;
 
 import com.example.Active.Razgrad.community.Category;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class User {
@@ -22,7 +21,8 @@ public class User {
     private String address;
     private int bulstat;
     private String website;
-    //wallpaper?
+    @Column(nullable = true, length = 64)
+    private String photos;
     private String description;
     @Enumerated(EnumType.STRING)
     private Category category;
@@ -132,4 +132,17 @@ public class User {
         this.telephone = telephone;
     }
 
+    public String getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(String photos) {
+        this.photos = photos;
+    }
+       @Transient
+        public String getPhotosImagePath() {
+            if (photos == null || id == null) return null;
+
+            return "/user-photos/" + id + "/" + photos;
+        }
 }
