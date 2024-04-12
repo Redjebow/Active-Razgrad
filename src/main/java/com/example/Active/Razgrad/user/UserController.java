@@ -74,26 +74,11 @@ public class UserController {
             return new ModelAndView("user-register");
         }
 
-        User user = userMapper.toEntity(userService.makeCryptedPassword(userDTO));
-        userService.saveUserRoleUser(user);
 
-        return new ModelAndView("result");
-    } @PostMapping("/submitCommunity")
-public ModelAndView submitCommunity(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model ){
-        if(bindingResult.hasErrors()) {
-            model.addAttribute("user", userDTO);
-            return new ModelAndView("community-register");
-        }
-        if(!userDTO.getPassword().equals(userDTO.getRepeatPassword())){
-            model.addAttribute("PasswordDoNotMatch", "Password Do Not Match");
-            model.addAttribute("user", userDTO);
-            model.addAttribute("category", Category.values());
-            return new ModelAndView("community-register");
-        }
-        User user = userMapper.toEntity(userService.makeCryptedPassword(userDTO));
-        userService.saveUserRoleCommunity(user);
 
-        return new ModelAndView("result");
+    @PostMapping("/submitCommunity")
+    public String submitCommunity(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, Model model ){
+        return userService.submitCommunity(userDTO,bindingResult,model);
     }
 
     @GetMapping("/details")
