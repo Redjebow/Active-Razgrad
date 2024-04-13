@@ -43,7 +43,7 @@ public class UserService {
     public List<User>getAllCommunityRoleUsers(List<User>userList){
         List<User>communityUserList = new ArrayList<>();
         for (User user:userList) {
-            if(user.getRole().equals("ROLE_COMMUNITY")){
+            if(user.getRole()==Role.ROLE_COMMUNITY){
                 communityUserList.add(user);
             }
         }return communityUserList;
