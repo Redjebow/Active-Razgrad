@@ -69,7 +69,7 @@ public class ActivityService {
     public List<Activity> getAllActivitiesByCategory(String category) {
         try {
             Category userCategory = Category.valueOf(category.toUpperCase());
-            Iterable<Activity> userIterable = activityRepository.findAll();
+           // Iterable<Activity> activityIterable = activityRepository.findAll();
             List<Activity> sortedActivity = new ArrayList<>();
             for (Activity activity : sortedActivity) {
                 if (activity.getCategory() != null && activity.getCategory().equals(userCategory)) {
@@ -79,7 +79,7 @@ public class ActivityService {
             return sortedActivity;
         } catch (IllegalArgumentException e) {
 
-            return Collections.emptyList(); // Връщаме празен списък в случай на грешка
+            return Collections.emptyList();
         }
     }
 
