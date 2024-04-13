@@ -139,10 +139,11 @@ public class User {
     public void setPhotos(String photos) {
         this.photos = photos;
     }
-       @Transient
-        public String getPhotosImagePath() {
-            if (photos == null || id == null) return null;
 
-            return "/user-photos/" + id + "/" + photos;
-        }
+    @Transient
+    public String getPhotosImagePath() {
+        if (photos == null || id == null) return null;
+
+        return "/user-photos/" + id + "/" + photos;
+    }
 }

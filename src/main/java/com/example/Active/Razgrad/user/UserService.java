@@ -119,7 +119,7 @@ public class UserService {
             return sortedCommunity;
         } catch (IllegalArgumentException e) {
 
-            return Collections.emptyList(); // Връщаме празен списък в случай на грешка
+            return Collections.emptyList();
         }
     }
 }

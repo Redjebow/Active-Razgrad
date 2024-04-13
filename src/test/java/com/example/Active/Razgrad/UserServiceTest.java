@@ -149,7 +149,7 @@ public class UserServiceTest {
         userDTO.setRepeatPassword("password");
         BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "userDTO");
         Model model = mock(Model.class);
-        UserRepository userRepository = mock(UserRepository.class); // Създаване на мок обект за UserRepository
+        UserRepository userRepository = mock(UserRepository.class);
         UserService userService = new UserService(new BCryptPasswordEncoder(), userRepository, new UserMapper());
 
         // When
@@ -185,7 +185,7 @@ public class UserServiceTest {
         userDTO.setRepeatPassword("password");
         BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "userDTO");
         Model model = mock(Model.class);
-        UserRepository userRepository = mock(UserRepository.class); // Създаване на мок обект за UserRepository
+        UserRepository userRepository = mock(UserRepository.class);
         UserService userService = new UserService(new BCryptPasswordEncoder(), userRepository, new UserMapper());
 
         // When
@@ -200,10 +200,10 @@ public class UserServiceTest {
     public void testGetAllCommunityRoleUsers() {
         // Given
         User communityUser1 = mock(User.class);
-        when(communityUser1.getRole()).thenReturn(Role.ROLE_COMMUNITY); // Настройка на връщаната стойност за getRole()
+        when(communityUser1.getRole()).thenReturn(Role.ROLE_COMMUNITY);
 
         User user2 = mock(User.class);
-        when(user2.getRole()).thenReturn(Role.ROLE_USER); // Настройка на връщаната стойност за getRole()
+        when(user2.getRole()).thenReturn(Role.ROLE_USER);
 
         List<User> userList = new ArrayList<>();
         userList.add(communityUser1);
