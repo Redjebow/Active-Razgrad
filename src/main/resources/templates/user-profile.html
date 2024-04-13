@@ -17,7 +17,7 @@
             <td><strong>Име: </strong></td>
             <td th:text="${#authentication.getPrincipal().getFirstName()}"></td>
         </tr>
-        <tr>
+        <tr sec:authorize="hasRole('USER')">
             <td sec:authorize="hasRole('USER')"><strong>Фамилия: </strong></td>
             <td th:text="${#authentication.getPrincipal().getLastName()}"></td>
         </tr>
@@ -33,15 +33,15 @@
             <td><strong>Телефон за контакти: </strong></td>
             <td th:text="${#authentication.getPrincipal().getTelephone()}"></td>
         </tr>
-        <tr>
+        <tr sec:authorize="hasRole('COMMUNITY')">
             <td sec:authorize="hasRole('COMMUNITY')"><strong>Булстат: </strong></td>
             <td th:text="${#authentication.getPrincipal().getBulstat()}"></td>
         </tr>
-        <tr>
+        <tr sec:authorize="hasRole('COMMUNITY')">
             <td sec:authorize="hasRole('COMMUNITY')"><strong>Описание: </strong></td>
             <td th:text="${#authentication.getPrincipal().getDescription()}"></td>
         </tr>
-        <tr>
+        <tr sec:authorize="hasRole('COMMUNITY')">
             <td sec:authorize="hasRole('COMMUNITY')"><strong>Категория: </strong></td>
             <td th:text="${#authentication.getPrincipal().getCategory()}"></td>
         </tr>
