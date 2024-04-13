@@ -10,12 +10,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.MapBindingResult;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -67,7 +70,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testSaveUserRoleCommunity(){
+    public void testSaveUserRoleCommunity() {
         //Given
         User user = mock(User.class);
 
@@ -144,18 +147,21 @@ public class UserServiceTest {
         UserDTO userDTO = new UserDTO();
         userDTO.setPassword("password");
         userDTO.setRepeatPassword("password");
-        when(bindingResult.hasErrors()).thenReturn(false);
+        BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "userDTO");
+        Model model = mock(Model.class);
+        UserRepository userRepository = mock(UserRepository.class); // Създаване на мок обект за UserRepository
+        UserService userService = new UserService(new BCryptPasswordEncoder(), userRepository, new UserMapper());
 
         // When
         String viewName = userService.submitUser(userDTO, bindingResult, model);
 
         // Then
-        verify(model, never()).addAttribute(eq("user"), any(UserDTO.class));
         assertEquals("result", viewName);
+        assertTrue(model.asMap().isEmpty());
     }
 
     @Test
-    public void testSubmitCommunityWithError(){
+    public void testSubmitCommunityWithError() {
         // Given
         UserDTO userDTO = new UserDTO();
         userDTO.setPassword("password");
@@ -171,42 +177,45 @@ public class UserServiceTest {
 
     }
 
-//    @Test
-//    public void testSubmitCommunityWithoutError() {
-//        // Given
-//        UserDTO userDTO = new UserDTO();
-//        userDTO.setPassword("password");
-//        userDTO.setRepeatPassword("password");
-//        when(bindingResult.hasErrors()).thenReturn(false);
-//
-//        // When
-//        String viewName = userService.submitCommunity(userDTO, bindingResult, model);
-//
-//        // Then
-//        verify(model, never()).addAttribute(eq("user"), any(UserDTO.class));
-//        assertEquals("result", viewName);
-//    }
-//    @Test
-//    public void testGetAllCommunityRoleUsers() {
-//        // Given
-//        User communityUser1 = mock(User.class);
-//        communityUser1.setRole(Role.ROLE_COMMUNITY);
-////        when(communityUser1.getRole()).thenReturn(Role.ROLE_COMMUNITY);
-//
-//        User user2 = mock(User.class);
-//        user2.setRole(Role.ROLE_USER);
-////        when(user2.getRole()).thenReturn(Role.ROLE_USER);
-//
-//        List<User> userList = new ArrayList<>();
-//        userList.add(communityUser1);
-//        userList.add(user2);
-//
-//        // When
-//        List<User> communityUsers = userService.getAllCommunityRoleUsers(userList);
-//
-//        // Then
-//        assertEquals(1, communityUsers.size());
-//    }
+    @Test
+    public void testSubmitCommunityWithoutError() {
+        // Given
+        UserDTO userDTO = new UserDTO();
+        userDTO.setPassword("password");
+        userDTO.setRepeatPassword("password");
+        BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "userDTO");
+        Model model = mock(Model.class);
+        UserRepository userRepository = mock(UserRepository.class); // Създаване на мок обект за UserRepository
+        UserService userService = new UserService(new BCryptPasswordEncoder(), userRepository, new UserMapper());
 
+        // When
+        String viewName = userService.submitCommunity(userDTO, bindingResult, model);
 
+        // Then
+        assertEquals("result", viewName);
+        assertTrue(model.asMap().isEmpty());
+    }
+
+    @Test
+    public void testGetAllCommunityRoleUsers() {
+        // Given
+        User communityUser1 = mock(User.class);
+        when(communityUser1.getRole()).thenReturn(Role.ROLE_COMMUNITY); // Настройка на връщаната стойност за getRole()
+
+        User user2 = mock(User.class);
+        when(user2.getRole()).thenReturn(Role.ROLE_USER); // Настройка на връщаната стойност за getRole()
+
+        List<User> userList = new ArrayList<>();
+        userList.add(communityUser1);
+        userList.add(user2);
+
+        // When
+        List<User> communityUsers = userService.getAllCommunityRoleUsers(userList);
+
+        // Then
+        assertEquals(1, communityUsers.size());
+    }
 }
+
+
+
