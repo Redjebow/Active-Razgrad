@@ -8,6 +8,7 @@ public class ActiveRazgradApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ActiveRazgradApplication.class, args);
+		System.out.println("Try github actions with build- demo file");
 	}
 
 }
